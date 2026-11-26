@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.CustomerDetailPage" Title="{loc:Translate X_customer}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="{loc:Translate X_edit}" Command="{Binding EditCommand}" />
+    <ToolbarItem Text="{loc:Translate X_read}" Clicked="OnSpeakClicked" />
+    <ToolbarItem Text="{loc:Translate X_stop}" Clicked="OnStopClicked" />
+  </ContentPage.ToolbarItems>
+
+  <CollectionView ItemsSource="{Binding Transactions}" Margin="16,0">
+    <CollectionView.Header>
+      <VerticalStackLayout Spacing="16" Padding="0,16,0,8" MaximumWidthRequest="980">
+
+        <!-- Profile + balance -->
+        <Border Style="{StaticResource Hero}">
+          <VerticalStackLayout Spacing="14">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+              <Border WidthRequest="56" HeightRequest="56" StrokeThickness="0" StrokeShape="RoundRectangle 28" Background="{StaticResource TealGradient}">
+                <Label Text="{Binding Customer.Name, Converter={StaticResource Initials}}" TextColor="White" FontSize="20" FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+              </Border>
+              <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                <Label Text="{Binding Customer.Name}" TextColor="White" FontSize="21" FontAttributes="Bold" LineBreakMode="TailTruncation" SemanticProperties.HeadingLevel="Level1" />
+                <HorizontalStackLayout Spacing="6" IsVisible="{Binding Customer.Phone, Converter={StaticResource HasText}}">
+                  <Label Text="{x:Static c:Icons.Phone}" FontFamily="Icons" FontSize="13" TextColor="#C7D2FE" VerticalTextAlignment="Center" />
+                  <Label Text="{Binding Customer.Phone}" Style="{StaticResource OnHeroText}" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+              </VerticalStackLayout>
+            </Grid>
+            <Border Style="{StaticResource HeroPill}" Padding="14,12">
+              <VerticalStackLayout Spacing="2">
+                <Label Text="{loc:Translate X_balance_customer_owes}" Style="{StaticResource OnHeroText}" />
+                <Label Text="{Binding Customer.CurrentBalance, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" Style="{StaticResource OnHeroValue}" />
+                <Label Text="{Binding Customer.CreditLimit, Converter={StaticResource Fmt}, ConverterParameter=T_credit_limit_rs}" Style="{StaticResource OnHeroText}" />
+              </VerticalStackLayout>
+            </Border>
+            <HorizontalStackLayout Spacing="6">
+              <c:StatusBadge Tone="Danger" Icon="{x:Static c:Icons.Alert}" Text="{loc:Translate X_over_limit}" IsVisible="{Binding Customer.IsOverLimit}" />
+              <c:StatusBadge Tone="Warning" Text="{loc:Translate UI_Due}" IsVisible="{Binding Customer.IsDueWithinLimit}" />
+              <c:StatusBadge Tone="Success" Text="{loc:Translate UI_Settled}" IsVisible="{Binding Customer.IsSettled}" />
+              <c:StatusBadge Tone="Info" Text="{loc:Translate UI_Advance}" IsVisible="{Binding Customer.HasAdvance}" />
+            </HorizontalStackLayout>
+          </VerticalStackLayout>
+        </Border>
+
+        <!-- Actions -->
+        <c:AdaptiveGrid MinColumnWidth="190" MaxColumns="3" ColumnSpacing="10" RowSpacing="10">
+          <c:ActionTile Icon="{x:Static c:Icons.Cart}" Tone="Info" Text="{loc:Translate X_credit_sale}" Command="{Binding NewCreditSaleCommand}" />
+          <c:ActionTile Icon="{x:Static c:Icons.HandCoins}" Tone="Teal" Text="{loc:Translate X_receive_payment}" Command="{Binding ReceivePaymentCommand}" />
+          <c:ActionTile Icon="{x:Static c:Icons.FileText}" Tone="Neutral" Text="{loc:Translate X_statement_pdf_share}" Command="{Binding OpenStatementCommand}" />
+        </c:AdaptiveGrid>
+
+        <Label Text="{loc:Translate X_transactions}" Style="{StaticResource H2}" Margin="0,4,0,0" SemanticProperties.HeadingLevel="Level2" />
+        <c:EmptyState IsVisible="{Binding Transactions.Count, Converter={StaticResource IsZero}}" Compact="True" Icon="{x:Static c:Icons.Receipt}" Message="{loc:Translate X_no_transactions_yet}" />
+      </VerticalStackLayout>
+    </CollectionView.Header>
+    <CollectionView.Footer><BoxView HeightRequest="16" Color="Transparent" /></CollectionView.Footer>
+    <CollectionView.ItemTemplate>
+      <DataTemplate>
+        <Border Style="{StaticResource ListCard}" Padding="12" Margin="0,0,0,8" MaximumWidthRequest="980">
+          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <Border Style="{StaticResource IconChip}" WidthRequest="38" HeightRequest="38">
+              <Label Text="{x:Static c:Icons.Receipt}" Style="{StaticResource Icon}" FontSize="17" TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+              <Label Text="{Binding TypeText}" FontAttributes="Bold" />
+              <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" Style="{StaticResource Caption}" />
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="2">
+              <Label Text="{Binding TotalAmount, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" Style="{StaticResource Money}" FontSize="15" HorizontalOptions="End" />
+              <Label Text="{Binding BalanceAfter, Converter={StaticResource Fmt}, ConverterParameter=T_bal_2}" Style="{StaticResource Caption}" HorizontalOptions="End" />
+            </VerticalStackLayout>
+          </Grid>
+        </Border>
+      </DataTemplate>
+    </CollectionView.ItemTemplate>
+  </CollectionView>
+</ContentPage>

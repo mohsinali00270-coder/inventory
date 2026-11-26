@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.CustomerEditPage" Title="{Binding Title}">
+  <ScrollView>
+    <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="16" MaximumWidthRequest="780">
+
+      <Border Style="{StaticResource InfoBanner}" Padding="12">
+        <VerticalStackLayout Spacing="6">
+          <Button Text="{Binding MicText}" Command="{Binding VoiceCommand}" Style="{StaticResource OutlineButton}" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource SurfaceDark}}">
+            <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Mic}" Size="18" Color="{StaticResource Royal}" /></Button.ImageSource>
+          </Button>
+          <Label Text="{Binding VoiceStatus}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" IsVisible="{Binding VoiceStatus, Converter={StaticResource HasText}}" />
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Contact -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Label Text="{loc:Translate UI_Contact}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+          <c:AdaptiveGrid MinColumnWidth="220" MaxColumns="2">
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_name}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Entry Text="{Binding Name}" /></Border>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_phone}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                  <Label Text="{x:Static c:Icons.Phone}" Style="{StaticResource Icon}" FontSize="16" />
+                  <Entry Grid.Column="1" Text="{Binding Phone}" Keyboard="Telephone" />
+                </Grid>
+              </Border>
+            </VerticalStackLayout>
+          </c:AdaptiveGrid>
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_address}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="{x:Static c:Icons.MapPin}" Style="{StaticResource Icon}" FontSize="16" />
+                <Entry Grid.Column="1" Text="{Binding Address}" />
+              </Grid>
+            </Border>
+          </VerticalStackLayout>
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_notes}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}" Padding="10,4"><Editor Text="{Binding Notes}" HeightRequest="88" AutoSize="TextChanges" /></Border>
+          </VerticalStackLayout>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Credit -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Label Text="{loc:Translate UI_Credit}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+          <c:AdaptiveGrid MinColumnWidth="220" MaxColumns="2">
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_credit_limit_0_no_limit}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Entry Text="{Binding CreditLimit}" Keyboard="Numeric" /></Border>
+            </VerticalStackLayout>
+            <VerticalStackLayout IsVisible="{Binding IsNew}">
+              <Label Text="{loc:Translate X_old_balance_already_owed}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Entry Text="{Binding OpeningBalance}" Keyboard="Numeric" /></Border>
+            </VerticalStackLayout>
+          </c:AdaptiveGrid>
+        </VerticalStackLayout>
+      </Border>
+
+      <Button Text="{loc:Translate X_save}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}">
+        <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Check}" Size="18" Color="White" /></Button.ImageSource>
+      </Button>
+      <Button Text="{loc:Translate X_delete}" Command="{Binding DeleteCommand}" IsVisible="{Binding IsExisting}" Style="{StaticResource DangerOutlineButton}" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

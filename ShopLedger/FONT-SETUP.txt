@@ -1,0 +1,6 @@
+URDU FONT (one-time, 1 minute)
+1. Download "Noto Nastaliq Urdu" (free, OFL license) from https://fonts.google.com/noto/specimen/Noto+Nastaliq+Urdu
+2. Copy the regular weight file into  Resources/Fonts/  and name it exactly:
+       NotoNastaliqUrdu-Regular.ttf
+3. Rebuild. The app detects the file automatically: Urdu mode uses it for all text and for the PDF statement.
+Without the file the app still works; Urdu text uses the phone's default Arabic-script font.

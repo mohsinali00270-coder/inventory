@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:vm="clr-namespace:ShopLedger.ViewModels"
+             xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.NewSalePage" Title="{Binding Title}">
+  <!-- Same structure as before the redesign: top panel (voice, customer, product search), cart list, checkout panel.
+       Lists are not nested inside each other so taps on search results work on every platform. -->
+  <Grid RowDefinitions="Auto,*,Auto" MaximumWidthRequest="980">
+
+        <VerticalStackLayout Spacing="10" Padding="16,14,16,6">
+          <!-- Voice -->
+          <Border Style="{StaticResource InfoBanner}" Padding="12">
+            <VerticalStackLayout Spacing="6">
+              <Button Text="{Binding MicText}" Command="{Binding VoiceCommand}" Style="{StaticResource OutlineButton}" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource SurfaceDark}}">
+                <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Mic}" Size="18" Color="{StaticResource Royal}" /></Button.ImageSource>
+              </Button>
+              <Label Text="{Binding VoiceStatus}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" IsVisible="{Binding VoiceStatus, Converter={StaticResource HasText}}" />
+            </VerticalStackLayout>
+          </Border>
+
+          <!-- Sale type + customer -->
+          <Border Style="{StaticResource Card}" IsVisible="{Binding IsSale}" Padding="14">
+            <VerticalStackLayout Spacing="12">
+              <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <VerticalStackLayout VerticalOptions="Center">
+                  <Label Text="{loc:Translate X_credit_sale}" Style="{StaticResource H3}" />
+                  <Label Text="{loc:Translate X_off_cash_sale}" Style="{StaticResource Caption}" />
+                </VerticalStackLayout>
+                <Switch Grid.Column="1" IsToggled="{Binding IsCreditSale}" VerticalOptions="Center" SemanticProperties.Description="{loc:Translate X_credit_sale}" />
+              </Grid>
+              <Border Style="{StaticResource Field}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                  <Label Text="{x:Static c:Icons.Users}" Style="{StaticResource Icon}" FontSize="16" />
+                  <Picker Grid.Column="1" Title="{loc:Translate X_customer}" ItemsSource="{Binding Customers}"
+                          ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCustomer}" />
+                </Grid>
+              </Border>
+            </VerticalStackLayout>
+          </Border>
+
+          <!-- Product search + results -->
+          <Border Style="{StaticResource SearchField}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Text="{x:Static c:Icons.Search}" Style="{StaticResource Icon}" FontSize="18" />
+              <Entry Grid.Column="1" Text="{Binding ProductSearch}" Placeholder="{loc:Translate X_search_product_to_add}" ClearButtonVisibility="WhileEditing" ReturnType="Search" />
+            </Grid>
+          </Border>
+          <Border Style="{StaticResource CardFlat}" Padding="6" IsVisible="{Binding HasSearchResults}">
+            <CollectionView ItemsSource="{Binding SearchResults}" MaximumHeightRequest="240">
+              <CollectionView.ItemTemplate>
+                <DataTemplate>
+                  <Grid Padding="10,9" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <Grid.GestureRecognizers>
+                      <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NewSaleViewModel}}, Path=AddProductCommand}"
+                                            CommandParameter="{Binding .}" />
+                    </Grid.GestureRecognizers>
+                    <Label Text="{x:Static c:Icons.Plus}" Style="{StaticResource Icon}" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+                    <Label Grid.Column="1" Text="{Binding Name}" FontSize="15" VerticalTextAlignment="Center" />
+                    <c:StatusBadge Grid.Column="2" Tone="Neutral" Text="{Binding Stock, Converter={StaticResource Fmt}, ConverterParameter=T_stock}" />
+                  </Grid>
+                </DataTemplate>
+              </CollectionView.ItemTemplate>
+            </CollectionView>
+          </Border>
+
+          <HorizontalStackLayout Spacing="8" Margin="0,6,0,0">
+            <Label Text="{x:Static c:Icons.Cart}" Style="{StaticResource Icon}" FontSize="18" />
+            <Label Text="{loc:Translate UI_Cart}" Style="{StaticResource H2}" VerticalTextAlignment="Center" />
+          </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+    <Grid Grid.Row="1" Margin="16,0">
+      <c:EmptyState IsVisible="{Binding Cart.Count, Converter={StaticResource IsZero}}" Compact="True" Icon="{x:Static c:Icons.Cart}" Message="{loc:Translate X_search_and_tap_a_product_to_add_it}" />
+      <CollectionView ItemsSource="{Binding Cart}">
+      <CollectionView.Footer><BoxView HeightRequest="12" Color="Transparent" /></CollectionView.Footer>
+      <CollectionView.ItemTemplate>
+        <DataTemplate>
+          <Border Style="{StaticResource ListCard}" Padding="12" Margin="0,0,0,8">
+            <Grid ColumnDefinitions="*,90,110,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+              <Label Text="{Binding Name}" Style="{StaticResource H3}" Grid.ColumnSpan="3" VerticalTextAlignment="Center" LineBreakMode="TailTruncation" />
+              <Button Grid.Column="3" Text="{x:Static c:Icons.Trash}" Style="{StaticResource IconButton}"
+                      TextColor="{AppThemeBinding Light={StaticResource DangerColor}, Dark={StaticResource DangerOnDark}}"
+                      Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NewSaleViewModel}}, Path=RemoveLineCommand}"
+                      CommandParameter="{Binding .}" SemanticProperties.Description="{loc:Translate X_remove}" />
+              <Border Grid.Row="1" Style="{StaticResource Field}" Padding="10,0" MinimumHeightRequest="42">
+                <Entry Text="{Binding Quantity}" Keyboard="Numeric" Placeholder="{loc:Translate X_qty}" />
+              </Border>
+              <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Field}" Padding="10,0" MinimumHeightRequest="42">
+                <Entry Text="{Binding UnitPrice}" Keyboard="Numeric" Placeholder="{loc:Translate X_price}" />
+              </Border>
+              <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding LineTotal, Converter={StaticResource Fmt}, ConverterParameter=T_rs}"
+                     Style="{StaticResource Money}" HorizontalOptions="End" VerticalOptions="Center" />
+            </Grid>
+          </Border>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+      </CollectionView>
+    </Grid>
+
+    <!-- Checkout panel -->
+    <Border Grid.Row="2" Style="{StaticResource BottomPanel}">
+      <VerticalStackLayout Spacing="10">
+        <Grid ColumnDefinitions="*,Auto">
+          <Label Text="{loc:Translate UI_Summary}" Style="{StaticResource Overline}" VerticalOptions="Center" />
+          <Label Grid.Column="1" Text="{Binding Total, Converter={StaticResource Fmt}, ConverterParameter=T_total_rs}" Style="{StaticResource H1}" />
+        </Grid>
+        <c:AdaptiveGrid MinColumnWidth="220" MaxColumns="2" ColumnSpacing="10" RowSpacing="10">
+          <VerticalStackLayout IsVisible="{Binding ShowPaid}">
+            <Label Text="{loc:Translate X_paid_now_0_full_credit}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="{x:Static c:Icons.Banknote}" Style="{StaticResource Icon}" FontSize="16" />
+                <Entry Grid.Column="1" Text="{Binding PaidAmount}" Keyboard="Numeric" Placeholder="{loc:Translate X_paid_now_0_full_credit}" />
+              </Grid>
+            </Border>
+          </VerticalStackLayout>
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_note_optional}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="{x:Static c:Icons.Note}" Style="{StaticResource Icon}" FontSize="16" />
+                <Entry Grid.Column="1" Text="{Binding Note}" Placeholder="{loc:Translate X_note_optional}" />
+              </Grid>
+            </Border>
+          </VerticalStackLayout>
+        </c:AdaptiveGrid>
+        <Border Style="{StaticResource InfoBanner}" IsVisible="{Binding ShowBalanceInfo}">
+          <VerticalStackLayout Spacing="2">
+            <Label Text="{Binding DueAmount, Converter={StaticResource Fmt}, ConverterParameter=T_added_to_customer_balance_rs}" FontAttributes="Bold" FontSize="13" />
+            <Label Text="{Binding BalanceAfter, Converter={StaticResource Fmt}, ConverterParameter=T_balance_after_sale_rs}" Style="{StaticResource Caption}" />
+          </VerticalStackLayout>
+        </Border>
+        <Button Text="{loc:Translate X_save}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}">
+          <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Check}" Size="18" Color="White" /></Button.ImageSource>
+        </Button>
+      </VerticalStackLayout>
+    </Border>
+  </Grid>
+</ContentPage>

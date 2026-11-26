@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.DashboardPage" Title="{loc:Translate X_dashboard}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="{loc:Translate X_read}" Clicked="OnSpeakClicked" />
+    <ToolbarItem Text="{loc:Translate X_stop}" Clicked="OnStopClicked" />
+  </ContentPage.ToolbarItems>
+
+  <ScrollView>
+    <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="20" MaximumWidthRequest="1240">
+
+      <!-- Hero: today's sales, cash in hand, receivable -->
+      <Border Style="{StaticResource Hero}">
+        <VerticalStackLayout Spacing="4">
+          <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <Label Text="{loc:Translate X_today_s_sales}" Style="{StaticResource OnHeroOverline}" VerticalOptions="Center" />
+            <Label Grid.Column="1" Text="{Binding Today}" Style="{StaticResource OnHeroText}" VerticalOptions="Center" />
+          </Grid>
+          <Label Text="{Binding TodaySales, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" Style="{StaticResource OnHeroValue}"
+                 SemanticProperties.HeadingLevel="Level1" />
+          <c:AdaptiveGrid MinColumnWidth="210" MaxColumns="2" Margin="0,12,0,0" ColumnSpacing="10" RowSpacing="10">
+            <Border Style="{StaticResource HeroPill}">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Label Text="{x:Static c:Icons.Wallet}" FontFamily="Icons" FontSize="22" TextColor="#5EEAD4" VerticalOptions="Center" />
+                <VerticalStackLayout Grid.Column="1" Spacing="1">
+                  <Label Text="{loc:Translate X_cash_received_today}" Style="{StaticResource OnHeroText}" />
+                  <Label Text="{Binding TodayCash, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                </VerticalStackLayout>
+              </Grid>
+            </Border>
+            <Border Style="{StaticResource HeroPill}">
+              <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenCustomersCommand}" /></Border.GestureRecognizers>
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Label Text="{x:Static c:Icons.HandCoins}" FontFamily="Icons" FontSize="22" TextColor="#FCD34D" VerticalOptions="Center" />
+                <VerticalStackLayout Grid.Column="1" Spacing="1">
+                  <Label Text="{loc:Translate X_total_receivable_udhaar}" Style="{StaticResource OnHeroText}" />
+                  <Label Text="{Binding TotalReceivable, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                </VerticalStackLayout>
+              </Grid>
+            </Border>
+          </c:AdaptiveGrid>
+        </VerticalStackLayout>
+      </Border>
+
+      <c:StateBanner IsBusy="{Binding IsBusy}" Error="{Binding Error}" RetryCommand="{Binding LoadCommand}" />
+
+      <!-- Inventory KPIs -->
+      <VerticalStackLayout Spacing="10">
+        <Label Text="{loc:Translate UI_Inventory}" Style="{StaticResource Overline}" />
+        <c:AdaptiveGrid MinColumnWidth="165" MaxColumns="4">
+          <c:KpiCard Icon="{x:Static c:Icons.Package}" Tone="Info" Title="{loc:Translate UI_TotalProducts}"
+                     Value="{Binding TotalProducts, StringFormat='{0:N0}'}"
+                     Caption="{Binding CategoryCount, Converter={StaticResource Fmt}, ConverterParameter=UI_CategoriesCount}">
+            <c:KpiCard.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenProductsCommand}" /></c:KpiCard.GestureRecognizers>
+          </c:KpiCard>
+          <c:KpiCard Icon="{x:Static c:Icons.Coins}" Tone="Teal" Title="{loc:Translate UI_StockValue}"
+                     Value="{Binding StockValue, Converter={StaticResource Fmt}, ConverterParameter=T_rs}"
+                     Caption="{loc:Translate UI_AtCost}" />
+          <c:KpiCard Icon="{x:Static c:Icons.Alert}" Tone="Warning" Title="{loc:Translate UI_LowStock}"
+                     Value="{Binding LowStockCount, StringFormat='{0:N0}'}"
+                     Caption="{loc:Translate UI_BelowAlert}">
+            <c:KpiCard.GestureRecognizers><TapGestureRecognizer Command="{Binding OpenProductsCommand}" /></c:KpiCard.GestureRecognizers>
+          </c:KpiCard>
+          <c:KpiCard Icon="{x:Static c:Icons.Bell}" Tone="Danger" Title="{loc:Translate UI_Alerts}"
+                     Value="{Binding AlertCount, StringFormat='{0:N0}'}"
+                     Caption="{Binding AlertsCaption}" />
+        </c:AdaptiveGrid>
+      </VerticalStackLayout>
+
+      <!-- Quick actions -->
+      <VerticalStackLayout Spacing="10">
+        <Label Text="{loc:Translate UI_QuickActions}" Style="{StaticResource Overline}" />
+        <c:AdaptiveGrid MinColumnWidth="160" MaxColumns="4" ColumnSpacing="10" RowSpacing="10">
+          <c:ActionTile Icon="{x:Static c:Icons.Cart}" Tone="Info" Text="{loc:Translate X_new_sale}" Command="{Binding NewSaleCommand}" />
+          <c:ActionTile Icon="{x:Static c:Icons.HandCoins}" Tone="Teal" Text="{loc:Translate X_receive_payment}" Command="{Binding ReceivePaymentCommand}" />
+          <c:ActionTile Icon="{x:Static c:Icons.Truck}" Tone="Warning" Text="{loc:Translate X_stock_purchase}" Command="{Binding NewPurchaseCommand}" />
+          <c:ActionTile Icon="{x:Static c:Icons.Mic}" Tone="Neutral" Text="{loc:Translate X_voice_entry}" Command="{Binding VoiceEntryCommand}" />
+        </c:AdaptiveGrid>
+      </VerticalStackLayout>
+
+      <!-- Low stock + top customers side by side on wide screens -->
+      <c:AdaptiveGrid MinColumnWidth="340" MaxColumns="2" ColumnSpacing="16" RowSpacing="16">
+
+        <Border Style="{StaticResource Card}" VerticalOptions="Start">
+          <VerticalStackLayout Spacing="4">
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,6">
+              <Label Text="{Binding LowStockCount, Converter={StaticResource Fmt}, ConverterParameter=T_low_stock_items}" Style="{StaticResource H3}"
+                     VerticalOptions="Center" SemanticProperties.HeadingLevel="Level2" />
+              <Button Grid.Column="1" Text="{loc:Translate UI_SeeAll}" Style="{StaticResource SmallButton}" Command="{Binding OpenProductsCommand}" />
+            </Grid>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding LowStock}">
+              <BindableLayout.EmptyView>
+                <c:EmptyState Compact="True" Icon="{x:Static c:Icons.CheckCircle}" Title="{loc:Translate UI_AllGood}"
+                              Message="{loc:Translate X_all_products_are_well_stocked}" />
+              </BindableLayout.EmptyView>
+              <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                  <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Padding="0,8">
+                    <Border Style="{StaticResource IconChip}" WidthRequest="36" HeightRequest="36" BackgroundColor="{AppThemeBinding Light=#FEF3C7, Dark=#3D2C0A}">
+                      <Label Text="{x:Static c:Icons.Package}" Style="{StaticResource Icon}" FontSize="17" TextColor="{AppThemeBinding Light={StaticResource Warning}, Dark={StaticResource WarningOnDark}}" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                      <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+                      <Label Text="{Binding Category}" Style="{StaticResource Caption}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="3">
+                      <Label HorizontalOptions="End" FontAttributes="Bold">
+                        <Label.FormattedText><FormattedString>
+                          <Span Text="{Binding Stock, StringFormat='{0:0.##}'}" /><Span Text=" " /><Span Text="{Binding Unit}" />
+                        </FormattedString></Label.FormattedText>
+                      </Label>
+                      <c:StatusBadge HorizontalOptions="End" Tone="Danger" Text="{loc:Translate UI_OutOfStock}" IsVisible="{Binding IsOutOfStock}" />
+                      <c:StatusBadge HorizontalOptions="End" Tone="Warning" Text="{loc:Translate UI_LowStock}" IsVisible="{Binding IsRunningLow}" />
+                    </VerticalStackLayout>
+                  </Grid>
+                </DataTemplate>
+              </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+          </VerticalStackLayout>
+        </Border>
+
+        <Border Style="{StaticResource Card}" VerticalOptions="Start">
+          <VerticalStackLayout Spacing="4">
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,6">
+              <Label Text="{loc:Translate X_top_customers_by_balance}" Style="{StaticResource H3}" VerticalOptions="Center" SemanticProperties.HeadingLevel="Level2" />
+              <Button Grid.Column="1" Text="{loc:Translate UI_SeeAll}" Style="{StaticResource SmallButton}" Command="{Binding OpenCustomersCommand}" />
+            </Grid>
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding TopCustomers}">
+              <BindableLayout.EmptyView>
+                <c:EmptyState Compact="True" Icon="{x:Static c:Icons.CheckCircle}" Title="{loc:Translate UI_AllGood}"
+                              Message="{loc:Translate X_no_outstanding_balances}" />
+              </BindableLayout.EmptyView>
+              <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                  <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" Padding="0,8">
+                    <Border Style="{StaticResource Avatar}" WidthRequest="36" HeightRequest="36" StrokeShape="RoundRectangle 18">
+                      <Label Text="{Binding Name, Converter={StaticResource Initials}}" TextColor="White" FontSize="13" FontAttributes="Bold"
+                             HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                      <Label Text="{Binding Name}" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+                      <Label Text="{Binding Phone}" Style="{StaticResource Caption}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="3">
+                      <Label Text="{Binding CurrentBalance, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" Style="{StaticResource Money}" FontSize="15" HorizontalOptions="End" />
+                      <c:StatusBadge HorizontalOptions="End" Tone="Danger" Text="{loc:Translate X_over_limit}" IsVisible="{Binding IsOverLimit}" />
+                    </VerticalStackLayout>
+                  </Grid>
+                </DataTemplate>
+              </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+          </VerticalStackLayout>
+        </Border>
+      </c:AdaptiveGrid>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

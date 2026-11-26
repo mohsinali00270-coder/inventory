@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.ProductEditPage" Title="{Binding Title}">
+  <ScrollView>
+    <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="16" MaximumWidthRequest="780">
+
+      <!-- Voice fill -->
+      <Border Style="{StaticResource InfoBanner}" Padding="12">
+        <VerticalStackLayout Spacing="6">
+          <Button Text="{Binding MicText}" Command="{Binding VoiceCommand}" Style="{StaticResource OutlineButton}" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource SurfaceDark}}">
+            <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Mic}" Size="18" Color="{StaticResource Royal}" /></Button.ImageSource>
+          </Button>
+          <Label Text="{Binding VoiceStatus}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" IsVisible="{Binding VoiceStatus, Converter={StaticResource HasText}}" />
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Details -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Label Text="{loc:Translate UI_Details}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_name}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}"><Entry Text="{Binding Name}" Placeholder="{loc:Translate X_e_g_sugar}" /></Border>
+          </VerticalStackLayout>
+          <c:AdaptiveGrid MinColumnWidth="220" MaxColumns="2">
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_category}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Entry Text="{Binding Category}" /></Border>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_unit}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Picker ItemsSource="{Binding Units}" SelectedItem="{Binding Unit}" Title="{loc:Translate X_unit}" /></Border>
+            </VerticalStackLayout>
+          </c:AdaptiveGrid>
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_barcode_optional}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="{x:Static c:Icons.Tag}" Style="{StaticResource Icon}" FontSize="16" />
+                <Entry Grid.Column="1" Text="{Binding Barcode}" />
+              </Grid>
+            </Border>
+          </VerticalStackLayout>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Pricing -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Label Text="{loc:Translate UI_Pricing}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+          <c:AdaptiveGrid MinColumnWidth="180" MaxColumns="2">
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_purchase_price}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Entry Text="{Binding PurchasePrice}" Keyboard="Numeric" /></Border>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_sale_price}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Entry Text="{Binding SalePrice}" Keyboard="Numeric" /></Border>
+            </VerticalStackLayout>
+          </c:AdaptiveGrid>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Stock -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Label Text="{loc:Translate UI_StockSection}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+          <c:AdaptiveGrid MinColumnWidth="180" MaxColumns="2">
+            <VerticalStackLayout IsVisible="{Binding IsNew}">
+              <Label Text="{loc:Translate X_opening_stock}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}"><Entry Text="{Binding Stock}" Keyboard="Numeric" /></Border>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+              <Label Text="{loc:Translate X_low_stock_alert_level}" Style="{StaticResource FieldLabel}" />
+              <Border Style="{StaticResource Field}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                  <Label Text="{x:Static c:Icons.Bell}" Style="{StaticResource Icon}" FontSize="16" />
+                  <Entry Grid.Column="1" Text="{Binding LowStockLevel}" Keyboard="Numeric" />
+                </Grid>
+              </Border>
+            </VerticalStackLayout>
+          </c:AdaptiveGrid>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Photo -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Label Text="{loc:Translate X_photo_optional}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+          <Border StrokeThickness="0" StrokeShape="RoundRectangle 14" HeightRequest="160" IsVisible="{Binding HasPhoto}"
+                  BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceAltLight}, Dark={StaticResource SurfaceAltDark}}">
+            <Image Source="{Binding PhotoPath}" Aspect="AspectFit" />
+          </Border>
+          <c:AdaptiveGrid MinColumnWidth="130" MaxColumns="3" ColumnSpacing="8" RowSpacing="8">
+            <Button Text="{loc:Translate X_gallery}" Command="{Binding PickPhotoCommand}" Style="{StaticResource GhostButton}">
+              <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Image}" Size="17" Color="{AppThemeBinding Light={StaticResource InkSecondaryLight}, Dark={StaticResource InkSecondaryDark}}" /></Button.ImageSource>
+            </Button>
+            <Button Text="{loc:Translate X_camera}" Command="{Binding TakePhotoCommand}" Style="{StaticResource GhostButton}">
+              <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Camera}" Size="17" Color="{AppThemeBinding Light={StaticResource InkSecondaryLight}, Dark={StaticResource InkSecondaryDark}}" /></Button.ImageSource>
+            </Button>
+            <Button Text="{loc:Translate X_remove}" Command="{Binding RemovePhotoCommand}" IsVisible="{Binding HasPhoto}" Style="{StaticResource DangerOutlineButton}" />
+          </c:AdaptiveGrid>
+        </VerticalStackLayout>
+      </Border>
+
+      <Button Text="{loc:Translate X_save}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}">
+        <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Check}" Size="18" Color="White" /></Button.ImageSource>
+      </Button>
+      <Button Text="{loc:Translate X_delete}" Command="{Binding DeleteCommand}" IsVisible="{Binding IsExisting}" Style="{StaticResource DangerOutlineButton}" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

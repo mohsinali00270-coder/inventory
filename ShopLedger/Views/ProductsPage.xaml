@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services"
+             xmlns:vm="clr-namespace:ShopLedger.ViewModels"
+             xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.ProductsPage" Title="{loc:Translate X_products}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="{loc:Translate X_read}" Clicked="OnSpeakClicked" />
+    <ToolbarItem Text="{loc:Translate X_stop}" Clicked="OnStopClicked" />
+  </ContentPage.ToolbarItems>
+
+  <Grid MaximumWidthRequest="1240">
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16,14,16,0" RowSpacing="12">
+
+      <!-- Search -->
+      <Border Style="{StaticResource SearchField}">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Text="{x:Static c:Icons.Search}" Style="{StaticResource Icon}" FontSize="18" />
+          <Entry Grid.Column="1" Text="{Binding SearchText}" Placeholder="{loc:Translate X_search_name_or_barcode}"
+                 ClearButtonVisibility="WhileEditing" ReturnType="Search" SemanticProperties.Description="{loc:Translate X_search_name_or_barcode}" />
+        </Grid>
+      </Border>
+
+      <!-- Category filter chips -->
+      <CollectionView Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                      SelectionMode="Single" HeightRequest="40" HorizontalScrollBarVisibility="Never"
+                      SemanticProperties.Description="{loc:Translate X_category}">
+        <CollectionView.ItemsLayout><LinearItemsLayout Orientation="Horizontal" /></CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Grid Padding="0,2,8,2">
+              <Border x:Name="ChipBox" Style="{StaticResource Chip}" Margin="0"
+                      BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                      Stroke="{AppThemeBinding Light={StaticResource SubtleGray}, Dark={StaticResource LineDark}}">
+                <Label x:Name="ChipText" Text="{Binding .}" FontSize="13" FontAttributes="Bold" VerticalTextAlignment="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource InkSecondaryLight}, Dark={StaticResource InkSecondaryDark}}" />
+              </Border>
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                  <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Selected">
+                      <VisualState.Setters>
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                        <Setter TargetName="ChipBox" Property="Border.BackgroundColor" Value="{StaticResource Royal}" />
+                        <Setter TargetName="ChipBox" Property="Border.Stroke" Value="{StaticResource Royal}" />
+                        <Setter TargetName="ChipText" Property="Label.TextColor" Value="White" />
+                      </VisualState.Setters>
+                    </VisualState>
+                  </VisualStateGroup>
+                </VisualStateGroupList>
+              </VisualStateManager.VisualStateGroups>
+            </Grid>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+
+      <!-- Summary strip -->
+      <VerticalStackLayout Grid.Row="2" Spacing="8">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+          <Label Text="{Binding Products.Count, Converter={StaticResource Fmt}, ConverterParameter=UI_ProductsCount}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+          <c:StatusBadge Grid.Column="1" Tone="Warning" Icon="{x:Static c:Icons.Alert}"
+                         Text="{Binding LowStockCount, Converter={StaticResource Fmt}, ConverterParameter=T_low_stock_items_2}"
+                         IsVisible="{Binding LowStockCount, Converter={StaticResource NonZero}}" />
+        </Grid>
+        <c:StateBanner IsBusy="{Binding IsBusy}" Error="{Binding Error}" RetryCommand="{Binding LoadCommand}" />
+      </VerticalStackLayout>
+
+      <!-- Product cards: 1 column on phones, 2-3 on tablet / desktop -->
+      <CollectionView Grid.Row="3" ItemsSource="{Binding Products}" c:Responsive.MinItemWidth="340" c:Responsive.MaxSpan="3">
+        <CollectionView.ItemsLayout>
+          <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="12" VerticalItemSpacing="0" />
+        </CollectionView.ItemsLayout>
+        <CollectionView.EmptyView>
+          <c:EmptyState Icon="{x:Static c:Icons.Package}" Title="{loc:Translate UI_NoProducts}"
+                        Message="{loc:Translate X_no_products_yet_tap_to_add_one}" />
+        </CollectionView.EmptyView>
+        <CollectionView.Footer><BoxView HeightRequest="90" Color="Transparent" /></CollectionView.Footer>
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Border Style="{StaticResource ListCard}" Margin="0,0,0,12">
+              <Border.GestureRecognizers>
+                <TapGestureRecognizer
+                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=EditCommand}"
+                  CommandParameter="{Binding .}" />
+              </Border.GestureRecognizers>
+              <Grid ColumnDefinitions="56,*,Auto" ColumnSpacing="12" RowDefinitions="Auto,Auto">
+                <!-- Photo or placeholder -->
+                <Border Grid.RowSpan="2" WidthRequest="56" HeightRequest="56" StrokeThickness="0" StrokeShape="RoundRectangle 14" VerticalOptions="Start"
+                        BackgroundColor="{AppThemeBinding Light=#EFF6FF, Dark=#172C57}">
+                  <Grid>
+                    <Label Text="{x:Static c:Icons.Package}" Style="{StaticResource Icon}" FontSize="24"
+                           TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+                    <Image Source="{Binding PhotoPath}" IsVisible="{Binding HasPhoto}" Aspect="AspectFill" WidthRequest="56" HeightRequest="56" />
+                  </Grid>
+                </Border>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="3">
+                  <Label Text="{Binding Name}" Style="{StaticResource H3}" LineBreakMode="TailTruncation" />
+                  <HorizontalStackLayout Spacing="6">
+                    <Label Text="{x:Static c:Icons.Tag}" Style="{StaticResource Icon}" FontSize="12" />
+                    <Label Text="{Binding Category}" Style="{StaticResource Caption}" VerticalTextAlignment="Center" />
+                  </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" Spacing="4" HorizontalOptions="End">
+                  <Label HorizontalOptions="End" FontSize="18" FontAttributes="Bold">
+                    <Label.FormattedText>
+                      <FormattedString>
+                        <Span Text="{Binding Stock, StringFormat='{0:0.##}'}" />
+                        <Span Text=" " />
+                        <Span Text="{Binding Unit}" FontSize="13" FontAttributes="None" />
+                      </FormattedString>
+                    </Label.FormattedText>
+                  </Label>
+                  <c:StatusBadge HorizontalOptions="End" Tone="Danger" Text="{loc:Translate UI_OutOfStock}" IsVisible="{Binding IsOutOfStock}" />
+                  <c:StatusBadge HorizontalOptions="End" Tone="Warning" Text="{loc:Translate UI_LowStock}" IsVisible="{Binding IsRunningLow}" />
+                  <c:StatusBadge HorizontalOptions="End" Tone="Success" Text="{loc:Translate UI_InStock}" IsVisible="{Binding IsInStock}" />
+                </VerticalStackLayout>
+
+                <BoxView Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource Divider}" VerticalOptions="Start" Margin="0,12,0,0" />
+                <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto" Margin="0,22,0,0">
+                  <Label Text="{Binding SalePrice, Converter={StaticResource Fmt}, ConverterParameter=T_sale_rs}" FontAttributes="Bold" VerticalOptions="Center"
+                         TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+                  <Button Grid.Column="1" Text="{loc:Translate X_stock}" Style="{StaticResource SmallButton}"
+                          Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=AdjustCommand}"
+                          CommandParameter="{Binding .}" />
+                </Grid>
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </Grid>
+
+    <Button Text="{x:Static c:Icons.Plus}" Style="{StaticResource Fab}" Command="{Binding AddCommand}"
+            SemanticProperties.Description="{loc:Translate Title_NewProduct}" ToolTipProperties.Text="{loc:Translate Title_NewProduct}" />
+  </Grid>
+</ContentPage>

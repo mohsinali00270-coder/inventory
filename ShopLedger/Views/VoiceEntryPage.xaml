@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.VoiceEntryPage" Title="{loc:Translate X_voice_entry_2}">
+  <ScrollView>
+    <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="16" MaximumWidthRequest="720">
+
+      <!-- Microphone -->
+      <Border Style="{StaticResource Hero}" Padding="20,26">
+        <VerticalStackLayout Spacing="14">
+          <Button Text="{x:Static c:Icons.Mic}" Command="{Binding ListenCommand}" FontFamily="Icons" FontSize="40" FontAttributes="None"
+                  WidthRequest="104" HeightRequest="104" CornerRadius="52" Padding="0" HorizontalOptions="Center"
+                  BackgroundColor="{StaticResource Teal}" TextColor="White" Shadow="{StaticResource RaisedShadow}"
+                  SemanticProperties.Description="{Binding MicText}" ToolTipProperties.Text="{Binding MicText}" />
+          <Label Text="{Binding MicText}" TextColor="White" FontSize="17" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+          <Label Text="{Binding VoiceStatus}" Style="{StaticResource OnHeroText}" FontSize="13" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Transcript -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="10">
+          <Label Text="{loc:Translate X_what_i_heard_you_can_edit_it}" Style="{StaticResource H3}" />
+          <Border Style="{StaticResource Field}" Padding="10,4">
+            <Editor Text="{Binding Transcript}" HeightRequest="100" AutoSize="TextChanges" Placeholder="{loc:Translate X_speak_or_type_a_command_here}" />
+          </Border>
+          <Button Text="{loc:Translate X_understand}" Command="{Binding UnderstandCommand}" Style="{StaticResource NavyButton}">
+            <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Sparkles}" Size="17" Color="White" /></Button.ImageSource>
+          </Button>
+          <Border Style="{StaticResource Banner}" IsVisible="{Binding Warning, Converter={StaticResource HasText}}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+              <Label Text="{x:Static c:Icons.AlertCircle}" Style="{StaticResource Icon}" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource DangerColor}, Dark={StaticResource DangerOnDark}}" />
+              <Label Grid.Column="1" Text="{Binding Warning}" Style="{StaticResource ErrorText}" VerticalTextAlignment="Center" />
+            </Grid>
+          </Border>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Confirmation -->
+      <Border Style="{StaticResource Card}" IsVisible="{Binding CanConfirm}" Stroke="{StaticResource Teal}" StrokeThickness="1.5">
+        <VerticalStackLayout Spacing="12">
+          <HorizontalStackLayout Spacing="8">
+            <Label Text="{x:Static c:Icons.CheckCircle}" Style="{StaticResource Icon}" TextColor="{AppThemeBinding Light={StaticResource TealDark}, Dark={StaticResource TealOnDark}}" />
+            <Label Text="{loc:Translate X_please_confirm}" Style="{StaticResource H3}" VerticalTextAlignment="Center" />
+          </HorizontalStackLayout>
+          <Border Style="{StaticResource SuccessBanner}">
+            <Label Text="{Binding Preview}" FontSize="17" FontAttributes="Bold" />
+          </Border>
+          <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Text="{loc:Translate X_save}" Command="{Binding ConfirmCommand}" Style="{StaticResource TealButton}" />
+            <Button Grid.Column="1" Text="{loc:Translate X_cancel}" Command="{Binding ClearCommand}" Style="{StaticResource GhostButton}" />
+          </Grid>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Examples -->
+      <Border Style="{StaticResource CardFlat}" BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceAltLight}, Dark={StaticResource SurfaceAltDark}}">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Text="{x:Static c:Icons.Sparkles}" Style="{StaticResource Icon}" FontSize="16" VerticalOptions="Start" />
+          <Label Grid.Column="1" Text="{Binding Hints}" Style="{StaticResource Caption}" />
+        </Grid>
+      </Border>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

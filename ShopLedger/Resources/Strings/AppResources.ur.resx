@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="All" xml:space="preserve"><value>سب</value></data>
+  <data name="All_Customers" xml:space="preserve"><value>تمام گاہک</value></data>
+  <data name="All_Types" xml:space="preserve"><value>تمام اقسام</value></data>
+  <data name="Cancel" xml:space="preserve"><value>منسوخ</value></data>
+  <data name="Col_Balance" xml:space="preserve"><value>بقایا</value></data>
+  <data name="Col_Credit" xml:space="preserve"><value>جمع</value></data>
+  <data name="Col_Date" xml:space="preserve"><value>تاریخ</value></data>
+  <data name="Col_Debit" xml:space="preserve"><value>ادھار</value></data>
+  <data name="Col_Desc" xml:space="preserve"><value>تفصیل</value></data>
+  <data name="Continue" xml:space="preserve"><value>جاری رکھیں</value></data>
+  <data name="Delete" xml:space="preserve"><value>حذف کریں</value></data>
+  <data name="Dir_Less" xml:space="preserve"><value>گاہک کا بقایا کم کریں (-)</value></data>
+  <data name="Dir_More" xml:space="preserve"><value>گاہک کا بقایا بڑھائیں (+)</value></data>
+  <data name="Dlg_BackupFailed" xml:space="preserve"><value>بیک اپ ناکام</value></data>
+  <data name="Dlg_CheckPrice" xml:space="preserve"><value>قیمت چیک کریں</value></data>
+  <data name="Dlg_CreditLimit" xml:space="preserve"><value>ادھار کی حد پوری ہو گئی</value></data>
+  <data name="Dlg_DeleteCustomer" xml:space="preserve"><value>گاہک حذف کریں</value></data>
+  <data name="Dlg_DeleteProduct" xml:space="preserve"><value>چیز حذف کریں</value></data>
+  <data name="Dlg_Done" xml:space="preserve"><value>مکمل</value></data>
+  <data name="Dlg_InvalidFile" xml:space="preserve"><value>غلط فائل</value></data>
+  <data name="Dlg_Mic" xml:space="preserve"><value>مائیکروفون</value></data>
+  <data name="Dlg_MoreThanBalance" xml:space="preserve"><value>بقایا سے زیادہ</value></data>
+  <data name="Dlg_PdfError" xml:space="preserve"><value>پی ڈی ایف میں خرابی</value></data>
+  <data name="Dlg_ReadAloud" xml:space="preserve"><value>بلند آواز سے پڑھیں</value></data>
+  <data name="Dlg_RestoreBackup" xml:space="preserve"><value>بیک اپ بحال کریں</value></data>
+  <data name="Dlg_RestoreFailed" xml:space="preserve"><value>بحالی ناکام</value></data>
+  <data name="Dlg_UrduVoice" xml:space="preserve"><value>اردو آواز نہیں ملی</value></data>
+  <data name="Dlg_VoiceInput" xml:space="preserve"><value>آواز سے اندراج</value></data>
+  <data name="Err_AddProduct" xml:space="preserve"><value>کم از کم ایک چیز شامل کریں۔</value></data>
+  <data name="Err_AmountNotZero" xml:space="preserve"><value>رقم صفر نہیں ہو سکتی۔</value></data>
+  <data name="Err_AmountZero" xml:space="preserve"><value>صفر سے زیادہ رقم درج کریں۔</value></data>
+  <data name="Err_BadBackup" xml:space="preserve"><value>یہ فائل شاپ لیجر کا درست بیک اپ نہیں ہے۔</value></data>
+  <data name="Err_CreditLimit" xml:space="preserve"><value>{0} کا بقایا {1:N0} روپے ہو جائے گا، جو ادھار کی حد {2:N0} روپے سے زیادہ ہے۔</value></data>
+  <data name="Err_CreditNeedsCustomer" xml:space="preserve"><value>ادھار فروخت کے لیے گاہک منتخب کریں۔</value></data>
+  <data name="Err_CustHistory" xml:space="preserve"><value>اس گاہک کا لین دین موجود ہے، اسے حذف نہیں کیا جا سکتا۔</value></data>
+  <data name="Err_CustNotFound" xml:space="preserve"><value>گاہک نہیں ملا۔</value></data>
+  <data name="Err_CustomerName" xml:space="preserve"><value>گاہک کا نام ضروری ہے۔</value></data>
+  <data name="Err_LimitNeg" xml:space="preserve"><value>ادھار کی حد منفی نہیں ہو سکتی۔</value></data>
+  <data name="Err_NoStock" xml:space="preserve"><value>"{0}" کا اسٹاک کافی نہیں۔ موجود: {1:0.##}۔</value></data>
+  <data name="Err_PaidRange" xml:space="preserve"><value>ادا کردہ رقم صفر اور کل رقم کے درمیان ہونی چاہیے۔</value></data>
+  <data name="Err_PaymentZero" xml:space="preserve"><value>ادائیگی صفر سے زیادہ ہونی چاہیے۔</value></data>
+  <data name="Err_PriceNeg" xml:space="preserve"><value>قیمت منفی نہیں ہو سکتی۔</value></data>
+  <data name="Err_PricesNeg" xml:space="preserve"><value>قیمت اور اسٹاک منفی نہیں ہو سکتے۔</value></data>
+  <data name="Err_ProdNotFound" xml:space="preserve"><value>چیز نہیں ملی۔</value></data>
+  <data name="Err_ProductName" xml:space="preserve"><value>چیز کا نام ضروری ہے۔</value></data>
+  <data name="Err_QtyPositive" xml:space="preserve"><value>مقدار صفر سے زیادہ ہونی چاہیے۔</value></data>
+  <data name="Err_QtyZero" xml:space="preserve"><value>صفر سے زیادہ مقدار درج کریں۔</value></data>
+  <data name="Err_SaleType" xml:space="preserve"><value>قسم ادھار فروخت یا نقد فروخت ہونی چاہیے۔</value></data>
+  <data name="Err_SelectCustomer" xml:space="preserve"><value>گاہک منتخب کریں۔</value></data>
+  <data name="Error" xml:space="preserve"><value>خرابی</value></data>
+  <data name="H_BalAfter" xml:space="preserve"><value>
+بعد میں بقایا: {0:N0} روپے</value></data>
+  <data name="H_Note" xml:space="preserve"><value>
+نوٹ: {0}</value></data>
+  <data name="H_Summary" xml:space="preserve"><value>{0} اندراجات  |  فروخت {1:N0} روپے  |  ادائیگیاں {2:N0} روپے</value></data>
+  <data name="H_TotalPaid" xml:space="preserve"><value>کل: {0:N0} روپے
+ادا شدہ: {1:N0} روپے</value></data>
+  <data name="Lang_Hint" xml:space="preserve"><value>پوری ایپ کو انگریزی اور اردو میں بدلیں۔</value></data>
+  <data name="Language" xml:space="preserve"><value>زبان</value></data>
+  <data name="Lbl_Closing" xml:space="preserve"><value>اختتامی بقایا (گاہک کے ذمے)</value></data>
+  <data name="Lbl_Opening" xml:space="preserve"><value>ابتدائی بقایا</value></data>
+  <data name="Lbl_TotalCredit" xml:space="preserve"><value>کل جمع</value></data>
+  <data name="Lbl_TotalDebit" xml:space="preserve"><value>کل ادھار</value></data>
+  <data name="Mic_Stop" xml:space="preserve"><value>سننا بند کریں</value></data>
+  <data name="Mic_Tap" xml:space="preserve"><value>دبائیں اور بولیں</value></data>
+  <data name="Mic_Voice" xml:space="preserve"><value>آواز سے اندراج</value></data>
+  <data name="OK" xml:space="preserve"><value>ٹھیک ہے</value></data>
+  <data name="Pdf_Footer" xml:space="preserve"><value>شاپ لیجر سے تیار کردہ  |  صفحہ </value></data>
+  <data name="Pdf_Period" xml:space="preserve"><value>مدت</value></data>
+  <data name="Pdf_Title" xml:space="preserve"><value>کسٹمر اسٹیٹمنٹ</value></data>
+  <data name="Q_AdvanceCredit" xml:space="preserve"><value>اضافی رقم پیشگی جمع کے طور پر رکھی جائے گی۔ جاری رکھیں؟</value></data>
+  <data name="Q_DeleteCustomer" xml:space="preserve"><value>"{0}" حذف کریں؟</value></data>
+  <data name="Q_DeleteProduct" xml:space="preserve"><value>"{0}" حذف کریں؟ فروخت کا ریکارڈ محفوظ رہے گا۔</value></data>
+  <data name="Q_Owes" xml:space="preserve"><value>{0} کے ذمے {1:N0} روپے ہیں۔ </value></data>
+  <data name="Q_PriceLow" xml:space="preserve"><value>فروخت قیمت خریداری قیمت سے کم ہے۔ پھر بھی محفوظ کریں؟</value></data>
+  <data name="Q_Restore" xml:space="preserve"><value>اس سے موجودہ تمام ڈیٹا بیک اپ فائل سے بدل جائے گا۔ جاری رکھیں؟</value></data>
+  <data name="Q_SaveAnyway" xml:space="preserve"><value>پھر بھی محفوظ کریں؟</value></data>
+  <data name="Range_All" xml:space="preserve"><value>پورا ریکارڈ</value></data>
+  <data name="Range_Custom" xml:space="preserve"><value>اپنی مرضی</value></data>
+  <data name="Range_Last7" xml:space="preserve"><value>پچھلے 7 دن</value></data>
+  <data name="Range_ThisMonth" xml:space="preserve"><value>اس مہینے</value></data>
+  <data name="Range_ThisYear" xml:space="preserve"><value>اس سال</value></data>
+  <data name="Range_Today" xml:space="preserve"><value>آج</value></data>
+  <data name="Reason_Add" xml:space="preserve"><value>اسٹاک بڑھائیں (خریداری)</value></data>
+  <data name="Reason_CorrMinus" xml:space="preserve"><value>درستی (-)</value></data>
+  <data name="Reason_CorrPlus" xml:space="preserve"><value>درستی (+)</value></data>
+  <data name="Reason_Damage" xml:space="preserve"><value>ٹوٹ پھوٹ</value></data>
+  <data name="Reason_Loss" xml:space="preserve"><value>نقصان</value></data>
+  <data name="Restore" xml:space="preserve"><value>بحال کریں</value></data>
+  <data name="S_BackupCreated" xml:space="preserve"><value>بیک اپ بن گیا: {0}</value></data>
+  <data name="S_PickFile" xml:space="preserve"><value>بیک اپ فائل منتخب کریں</value></data>
+  <data name="S_Restored" xml:space="preserve"><value>بیک اپ بحال ہو گیا۔</value></data>
+  <data name="S_RestoredOk" xml:space="preserve"><value>بیک اپ کامیابی سے بحال ہو گیا۔</value></data>
+  <data name="Save" xml:space="preserve"><value>محفوظ کریں</value></data>
+  <data name="SaveAnyway" xml:space="preserve"><value>پھر بھی محفوظ کریں</value></data>
+  <data name="Stock_Correction" xml:space="preserve"><value>درستی</value></data>
+  <data name="Stock_Damage" xml:space="preserve"><value>ٹوٹ پھوٹ</value></data>
+  <data name="Stock_Initial" xml:space="preserve"><value>ابتدائی اسٹاک</value></data>
+  <data name="Stock_Loss" xml:space="preserve"><value>نقصان</value></data>
+  <data name="Stock_Purchase" xml:space="preserve"><value>خریداری</value></data>
+  <data name="Stock_Sale" xml:space="preserve"><value>فروخت</value></data>
+  <data name="T_added_to_customer_balance_rs" xml:space="preserve"><value>گاہک کے بقایا میں شامل: {0:N0} روپے</value></data>
+  <data name="T_bal" xml:space="preserve"><value>بقایا {0:N0}</value></data>
+  <data name="T_bal_2" xml:space="preserve"><value>بقایا: {0:N0}</value></data>
+  <data name="T_balance_after_sale_rs" xml:space="preserve"><value>فروخت کے بعد بقایا: {0:N0} روپے</value></data>
+  <data name="T_closing_balance_rs" xml:space="preserve"><value>اختتامی بقایا: {0:N0} روپے</value></data>
+  <data name="T_credit" xml:space="preserve"><value>جمع {0:N0}</value></data>
+  <data name="T_credit_limit_rs" xml:space="preserve"><value>ادھار کی حد: {0:N0} روپے</value></data>
+  <data name="T_current_balance_rs" xml:space="preserve"><value>موجودہ بقایا: {0:N0} روپے</value></data>
+  <data name="T_debit" xml:space="preserve"><value>ادھار {0:N0}</value></data>
+  <data name="T_low_stock_items" xml:space="preserve"><value>کم اسٹاک والی اشیاء ({0})</value></data>
+  <data name="T_low_stock_items_2" xml:space="preserve"><value>کم اسٹاک والی اشیاء: {0}</value></data>
+  <data name="T_opening_balance_rs" xml:space="preserve"><value>ابتدائی بقایا: {0:N0} روپے</value></data>
+  <data name="T_rs" xml:space="preserve"><value>{0:N0} روپے</value></data>
+  <data name="T_sale_rs" xml:space="preserve"><value>فروخت: {0:N2} روپے</value></data>
+  <data name="T_stock" xml:space="preserve"><value>اسٹاک: {0:0.##}</value></data>
+  <data name="T_total_credit_rs" xml:space="preserve"><value>کل جمع: {0:N0} روپے</value></data>
+  <data name="T_total_debit_rs" xml:space="preserve"><value>کل ادھار: {0:N0} روپے</value></data>
+  <data name="T_total_rs" xml:space="preserve"><value>کل: {0:N0} روپے</value></data>
+  <data name="Title_EditCustomer" xml:space="preserve"><value>گاہک میں ترمیم</value></data>
+  <data name="Title_EditProduct" xml:space="preserve"><value>چیز میں ترمیم</value></data>
+  <data name="Title_Manual" xml:space="preserve"><value>دستی اندراج</value></data>
+  <data name="Title_NewCustomer" xml:space="preserve"><value>نیا گاہک</value></data>
+  <data name="Title_NewProduct" xml:space="preserve"><value>نئی چیز</value></data>
+  <data name="Title_NewSale" xml:space="preserve"><value>نئی فروخت</value></data>
+  <data name="Title_Payment" xml:space="preserve"><value>ادائیگی وصول کریں</value></data>
+  <data name="Title_Purchase" xml:space="preserve"><value>اسٹاک خریداری</value></data>
+  <data name="Type_Adjustment" xml:space="preserve"><value>دستی اندراج</value></data>
+  <data name="Type_CashSale" xml:space="preserve"><value>نقد فروخت</value></data>
+  <data name="Type_CreditSale" xml:space="preserve"><value>ادھار فروخت</value></data>
+  <data name="Type_Payment" xml:space="preserve"><value>ادائیگی وصول</value></data>
+  <data name="Type_Purchase" xml:space="preserve"><value>اسٹاک خریداری</value></data>
+  <data name="V_CustExists" xml:space="preserve"><value>گاہک "{0}" پہلے سے موجود ہے۔</value></data>
+  <data name="V_CustNotFound" xml:space="preserve"><value>گاہک "{0}" نہیں ملا۔</value></data>
+  <data name="V_CustNotFoundCredit" xml:space="preserve"><value>گاہک "{0}" نہیں ملا۔ ادھار فروخت کے لیے گاہک ضروری ہے۔</value></data>
+  <data name="V_Hints" xml:space="preserve"><value>مثال: "علی ادھار دو کلو چینی ڈیڑھ سو کے حساب سے"  |  "علی نے پانچ سو روپے دیے"  |  "نیا گاہک بلال فون 03001234567 حد 5000"  |  "نئی چیز چاول قیمت 220 اسٹاک 30 کلو"</value></data>
+  <data name="V_InstallUrduVoice" xml:space="preserve"><value>اردو آواز انسٹال کریں: فون سیٹنگز &gt; ٹیکسٹ ٹو اسپیچ &gt; گوگل &gt; وائس ڈیٹا انسٹال کریں &gt; اردو۔</value></data>
+  <data name="V_MicPermission" xml:space="preserve"><value>آواز سے اندراج کے لیے مائیکروفون کی اجازت ضروری ہے۔ براہ کرم فون کی ایپ سیٹنگز میں اجازت دیں۔</value></data>
+  <data name="V_NoAmount" xml:space="preserve"><value>مجھے رقم سنائی نہیں دی۔</value></data>
+  <data name="V_NoCustomer" xml:space="preserve"><value>مجھے گاہک کا نام سنائی نہیں دیا۔</value></data>
+  <data name="V_NoProduct" xml:space="preserve"><value>مجھے چیز کا نام سنائی نہیں دیا۔</value></data>
+  <data name="V_NotUnderstood" xml:space="preserve"><value>مجھے سمجھ نہیں آئی۔</value></data>
+  <data name="V_ProdExists" xml:space="preserve"><value>چیز "{0}" پہلے سے موجود ہے۔</value></data>
+  <data name="V_ProdNotFound" xml:space="preserve"><value>چیز "{0}" نہیں ملی۔</value></data>
+  <data name="V_ProdNotFoundAdd" xml:space="preserve"><value>چیز "{0}" نہیں ملی۔ پہلے اسے شامل کریں۔</value></data>
+  <data name="V_UrduSttMissing" xml:space="preserve"><value>اس فون پر اردو آواز کی پہچان دستیاب نہیں ہو سکتی۔ گوگل ایپ میں اردو لینگویج پیک چیک کریں۔</value></data>
+  <data name="Voice_Listening" xml:space="preserve"><value>سن رہا ہوں...</value></data>
+  <data name="Voice_NothingHeard" xml:space="preserve"><value>کچھ سنائی نہیں دیا۔ دوبارہ کوشش کریں۔</value></data>
+  <data name="X_address" xml:space="preserve"><value>پتہ</value></data>
+  <data name="X_all_products_are_well_stocked" xml:space="preserve"><value>تمام اشیاء کا اسٹاک ٹھیک ہے۔</value></data>
+  <data name="X_amount" xml:space="preserve"><value>رقم</value></data>
+  <data name="X_backup_and_restore" xml:space="preserve"><value>بیک اپ اور بحالی</value></data>
+  <data name="X_backup_now" xml:space="preserve"><value>ابھی بیک اپ بنائیں</value></data>
+  <data name="X_balance_customer_owes" xml:space="preserve"><value>بقایا (گاہک کے ذمے)</value></data>
+  <data name="X_barcode_optional" xml:space="preserve"><value>بارکوڈ (اختیاری)</value></data>
+  <data name="X_cancel" xml:space="preserve"><value>منسوخ</value></data>
+  <data name="X_cash_received_today" xml:space="preserve"><value>آج وصول شدہ نقد</value></data>
+  <data name="X_category" xml:space="preserve"><value>کیٹگری</value></data>
+  <data name="X_credit_limit_0_no_limit" xml:space="preserve"><value>ادھار کی حد (0 = کوئی حد نہیں)</value></data>
+  <data name="X_credit_sale" xml:space="preserve"><value>ادھار فروخت</value></data>
+  <data name="X_customer" xml:space="preserve"><value>گاہک</value></data>
+  <data name="X_customers" xml:space="preserve"><value>گاہک</value></data>
+  <data name="X_dashboard" xml:space="preserve"><value>ڈیش بورڈ</value></data>
+  <data name="X_delete" xml:space="preserve"><value>حذف کریں</value></data>
+  <data name="X_e_g_sugar" xml:space="preserve"><value>مثلاً چینی</value></data>
+  <data name="X_edit" xml:space="preserve"><value>ترمیم</value></data>
+  <data name="X_history" xml:space="preserve"><value>ہسٹری</value></data>
+  <data name="X_in_stock" xml:space="preserve"><value>موجود اسٹاک: </value></data>
+  <data name="X_low_stock" xml:space="preserve"><value>اسٹاک کم ہے</value></data>
+  <data name="X_low_stock_alert_level" xml:space="preserve"><value>کم اسٹاک کی حد</value></data>
+  <data name="X_manual_entry" xml:space="preserve"><value>دستی اندراج</value></data>
+  <data name="X_name" xml:space="preserve"><value>نام *</value></data>
+  <data name="X_new_sale" xml:space="preserve"><value>نئی فروخت</value></data>
+  <data name="X_no_customers_yet_tap_to_add_one" xml:space="preserve"><value>ابھی کوئی گاہک نہیں۔ نیا گاہک شامل کرنے کے لیے + دبائیں۔</value></data>
+  <data name="X_no_entries_in_this_period" xml:space="preserve"><value>اس مدت میں کوئی اندراج نہیں۔</value></data>
+  <data name="X_no_outstanding_balances" xml:space="preserve"><value>کوئی بقایا نہیں۔</value></data>
+  <data name="X_no_products_yet_tap_to_add_one" xml:space="preserve"><value>ابھی کوئی چیز نہیں۔ شامل کرنے کے لیے + دبائیں۔</value></data>
+  <data name="X_no_stock_changes_yet" xml:space="preserve"><value>اسٹاک میں ابھی کوئی تبدیلی نہیں۔</value></data>
+  <data name="X_no_transactions_found" xml:space="preserve"><value>کوئی لین دین نہیں ملا۔</value></data>
+  <data name="X_no_transactions_yet" xml:space="preserve"><value>ابھی کوئی لین دین نہیں۔</value></data>
+  <data name="X_note_optional" xml:space="preserve"><value>نوٹ (اختیاری)</value></data>
+  <data name="X_notes" xml:space="preserve"><value>نوٹس</value></data>
+  <data name="X_off_cash_sale" xml:space="preserve"><value>(بند = نقد فروخت)</value></data>
+  <data name="X_old_balance_already_owed" xml:space="preserve"><value>پرانا بقایا جو پہلے سے واجب ہے</value></data>
+  <data name="X_opening_stock" xml:space="preserve"><value>ابتدائی اسٹاک</value></data>
+  <data name="X_over_limit" xml:space="preserve"><value>حد سے زیادہ</value></data>
+  <data name="X_paid_now_0_full_credit" xml:space="preserve"><value>ابھی ادا کردہ (0 = مکمل ادھار)</value></data>
+  <data name="X_pdf_share" xml:space="preserve"><value>پی ڈی ایف / شیئر</value></data>
+  <data name="X_period" xml:space="preserve"><value>مدت</value></data>
+  <data name="X_phone" xml:space="preserve"><value>فون</value></data>
+  <data name="X_please_confirm" xml:space="preserve"><value>براہ کرم تصدیق کریں</value></data>
+  <data name="X_price" xml:space="preserve"><value>قیمت</value></data>
+  <data name="X_products" xml:space="preserve"><value>اشیاء</value></data>
+  <data name="X_purchase_price" xml:space="preserve"><value>خریداری قیمت</value></data>
+  <data name="X_qty" xml:space="preserve"><value>مقدار</value></data>
+  <data name="X_quantity" xml:space="preserve"><value>مقدار</value></data>
+  <data name="X_read" xml:space="preserve"><value>سنائیں</value></data>
+  <data name="X_receive_payment" xml:space="preserve"><value>ادائیگی وصول کریں</value></data>
+  <data name="X_recent_activity" xml:space="preserve"><value>حالیہ سرگرمی</value></data>
+  <data name="X_restore_from_file" xml:space="preserve"><value>فائل سے بحال کریں</value></data>
+  <data name="X_sale_price" xml:space="preserve"><value>فروخت قیمت</value></data>
+  <data name="X_sales" xml:space="preserve"><value>فروخت</value></data>
+  <data name="X_save" xml:space="preserve"><value>محفوظ کریں</value></data>
+  <data name="X_save_a_copy_of_all_your_data_to_google" xml:space="preserve"><value>اپنا تمام ڈیٹا گوگل ڈرائیو، واٹس ایپ یا ای میل پر محفوظ کریں۔ بحال کرنے سے موجودہ ڈیٹا تبدیل ہو جائے گا۔</value></data>
+  <data name="X_save_adjustment" xml:space="preserve"><value>تبدیلی محفوظ کریں</value></data>
+  <data name="X_search_and_tap_a_product_to_add_it" xml:space="preserve"><value>چیز تلاش کریں اور شامل کرنے کے لیے اس پر دبائیں۔</value></data>
+  <data name="X_search_name_or_barcode" xml:space="preserve"><value>نام یا بارکوڈ تلاش کریں</value></data>
+  <data name="X_search_name_or_phone" xml:space="preserve"><value>نام یا فون تلاش کریں</value></data>
+  <data name="X_search_product_to_add" xml:space="preserve"><value>شامل کرنے کے لیے چیز تلاش کریں</value></data>
+  <data name="X_select_customer" xml:space="preserve"><value>گاہک منتخب کریں</value></data>
+  <data name="X_settings" xml:space="preserve"><value>ترتیبات</value></data>
+  <data name="X_shopledger" xml:space="preserve"><value>شاپ لیجر</value></data>
+  <data name="X_speak_or_type_a_command_here" xml:space="preserve"><value>بولیں، یا یہاں حکم لکھیں</value></data>
+  <data name="X_statement" xml:space="preserve"><value>اسٹیٹمنٹ</value></data>
+  <data name="X_statement_pdf_share" xml:space="preserve"><value>اسٹیٹمنٹ (پی ڈی ایف / شیئر)</value></data>
+  <data name="X_stock" xml:space="preserve"><value>اسٹاک</value></data>
+  <data name="X_stock_purchase" xml:space="preserve"><value>اسٹاک خریداری</value></data>
+  <data name="X_stop" xml:space="preserve"><value>روکیں</value></data>
+  <data name="X_to" xml:space="preserve"><value>تا</value></data>
+  <data name="X_today_s_sales" xml:space="preserve"><value>آج کی فروخت</value></data>
+  <data name="X_top_customers_by_balance" xml:space="preserve"><value>سب سے زیادہ بقایا والے گاہک</value></data>
+  <data name="X_total_receivable" xml:space="preserve"><value>کل وصولی</value></data>
+  <data name="X_total_receivable_udhaar" xml:space="preserve"><value>کل وصولی (ادھار)</value></data>
+  <data name="X_transactions" xml:space="preserve"><value>لین دین</value></data>
+  <data name="X_type" xml:space="preserve"><value>قسم</value></data>
+  <data name="X_understand" xml:space="preserve"><value>سمجھیں</value></data>
+  <data name="X_unit" xml:space="preserve"><value>اکائی</value></data>
+  <data name="X_voice_entry" xml:space="preserve"><value>آواز سے اندراج</value></data>
+  <data name="X_voice_entry_2" xml:space="preserve"><value>آواز سے اندراج</value></data>
+  <data name="X_what_i_heard_you_can_edit_it" xml:space="preserve"><value>میں نے جو سنا (آپ اسے بدل سکتے ہیں):</value></data>
+  <data name="X_photo_optional" xml:space="preserve"><value>تصویر (اختیاری)</value></data>
+  <data name="X_gallery" xml:space="preserve"><value>گیلری</value></data>
+  <data name="X_camera" xml:space="preserve"><value>کیمرہ</value></data>
+  <data name="X_remove" xml:space="preserve"><value>ہٹائیں</value></data>
+  <data name="Dlg_Photo" xml:space="preserve"><value>تصویر</value></data>
+  <data name="Err_NoCamera" xml:space="preserve"><value>اس ڈیوائس پر کیمرہ دستیاب نہیں ہے۔</value></data>
+  <data name="Err_CameraDenied" xml:space="preserve"><value>کیمرے کی اجازت نہیں دی گئی۔ تصویر لینے کے لیے سیٹنگز میں اجازت دیں۔</value></data>
+  <data name="X_appearance" xml:space="preserve"><value>ظاہری شکل</value></data>
+  <data name="Theme_System" xml:space="preserve"><value>فون کے مطابق</value></data>
+  <data name="Theme_Light" xml:space="preserve"><value>روشن</value></data>
+  <data name="Theme_Dark" xml:space="preserve"><value>تاریک</value></data>
+  <data name="X_demo_and_reset" xml:space="preserve"><value>ڈیمو ڈیٹا اور ری سیٹ</value></data>
+  <data name="X_load_demo" xml:space="preserve"><value>ڈیمو ڈیٹا شامل کریں</value></data>
+  <data name="X_clear_all" xml:space="preserve"><value>تمام ڈیٹا حذف کریں</value></data>
+  <data name="Dlg_Demo" xml:space="preserve"><value>ڈیمو ڈیٹا</value></data>
+  <data name="Demo_NotEmpty" xml:space="preserve"><value>ڈیمو ڈیٹا صرف خالی ایپ میں شامل ہو سکتا ہے۔ پہلے تمام ڈیٹا حذف کریں۔</value></data>
+  <data name="Q_LoadDemo" xml:space="preserve"><value>نمونے کی مصنوعات، گاہک اور لین دین شامل کریں؟</value></data>
+  <data name="Yes" xml:space="preserve"><value>جی ہاں</value></data>
+  <data name="S_DemoLoaded" xml:space="preserve"><value>ڈیمو ڈیٹا شامل ہو گیا۔</value></data>
+  <data name="Dlg_ClearAll" xml:space="preserve"><value>تمام ڈیٹا حذف کریں</value></data>
+  <data name="Q_ClearAll" xml:space="preserve"><value>یہ تمام مصنوعات، گاہک اور لین دین ہمیشہ کے لیے حذف کر دے گا۔ پہلے بیک اپ بنا لیں۔ جاری رکھیں؟</value></data>
+  <data name="S_Cleared" xml:space="preserve"><value>تمام ڈیٹا حذف ہو گیا۔</value></data>
+  <data name="UI_TotalProducts" xml:space="preserve"><value>کل مصنوعات</value></data>
+  <data name="UI_CategoriesCount" xml:space="preserve"><value>{0} کیٹیگریز</value></data>
+  <data name="UI_StockValue" xml:space="preserve"><value>اسٹاک کی مالیت</value></data>
+  <data name="UI_AtCost" xml:space="preserve"><value>خرید قیمت پر</value></data>
+  <data name="UI_LowStock" xml:space="preserve"><value>کم اسٹاک</value></data>
+  <data name="UI_BelowAlert" xml:space="preserve"><value>الرٹ لیول یا اس سے کم</value></data>
+  <data name="UI_Alerts" xml:space="preserve"><value>انوینٹری الرٹس</value></data>
+  <data name="UI_AlertsDetail" xml:space="preserve"><value>{0} اسٹاک ختم · {1} حد سے زیادہ ادھار</value></data>
+  <data name="UI_Overview" xml:space="preserve"><value>کاروبار کا جائزہ</value></data>
+  <data name="UI_QuickActions" xml:space="preserve"><value>فوری کام</value></data>
+  <data name="UI_Inventory" xml:space="preserve"><value>انوینٹری</value></data>
+  <data name="UI_Loading" xml:space="preserve"><value>لوڈ ہو رہا ہے…</value></data>
+  <data name="UI_LoadError" xml:space="preserve"><value>ڈیٹا لوڈ نہیں ہو سکا</value></data>
+  <data name="UI_Retry" xml:space="preserve"><value>دوبارہ کوشش کریں</value></data>
+  <data name="UI_OutOfStock" xml:space="preserve"><value>اسٹاک ختم</value></data>
+  <data name="UI_InStock" xml:space="preserve"><value>اسٹاک میں</value></data>
+  <data name="UI_SeeAll" xml:space="preserve"><value>سب دیکھیں</value></data>
+  <data name="UI_Due" xml:space="preserve"><value>بقایا</value></data>
+  <data name="UI_Settled" xml:space="preserve"><value>صاف</value></data>
+  <data name="UI_Advance" xml:space="preserve"><value>پیشگی</value></data>
+  <data name="UI_ProductsCount" xml:space="preserve"><value>{0} مصنوعات</value></data>
+  <data name="UI_CustomersCount" xml:space="preserve"><value>{0} گاہک</value></data>
+  <data name="UI_NoProducts" xml:space="preserve"><value>ابھی کوئی پروڈکٹ نہیں</value></data>
+  <data name="UI_NoCustomers" xml:space="preserve"><value>ابھی کوئی گاہک نہیں</value></data>
+  <data name="UI_NoActivity" xml:space="preserve"><value>ابھی کوئی سرگرمی نہیں</value></data>
+  <data name="UI_AllGood" xml:space="preserve"><value>سب ٹھیک ہے</value></data>
+  <data name="UI_Cart" xml:space="preserve"><value>کارٹ</value></data>
+  <data name="UI_Details" xml:space="preserve"><value>تفصیلات</value></data>
+  <data name="UI_Pricing" xml:space="preserve"><value>قیمت</value></data>
+  <data name="UI_StockSection" xml:space="preserve"><value>اسٹاک</value></data>
+  <data name="UI_Photo" xml:space="preserve"><value>تصویر</value></data>
+  <data name="UI_Contact" xml:space="preserve"><value>رابطہ</value></data>
+  <data name="UI_Credit" xml:space="preserve"><value>ادھار</value></data>
+  <data name="UI_Filters" xml:space="preserve"><value>فلٹرز</value></data>
+  <data name="UI_DangerZone" xml:space="preserve"><value>خطرناک زون</value></data>
+  <data name="UI_Offline" xml:space="preserve"><value>آف لائن کام کرتی ہے · ڈیٹا اسی ڈیوائس پر رہتا ہے</value></data>
+  <data name="UI_Tagline" xml:space="preserve"><value>دکان کا حساب اور اسٹاک</value></data>
+  <data name="UI_Version" xml:space="preserve"><value>ورژن {0}</value></data>
+  <data name="UI_CashToday" xml:space="preserve"><value>آج وصول شدہ نقد</value></data>
+  <data name="UI_Receivable" xml:space="preserve"><value>وصولی (ادھار)</value></data>
+  <data name="UI_VoiceTip" xml:space="preserve"><value>مائیک دبائیں اور حکم بولیں</value></data>
+  <data name="UI_Summary" xml:space="preserve"><value>خلاصہ</value></data>
+  <data name="UI_Current" xml:space="preserve"><value>موجودہ</value></data>
+</root>

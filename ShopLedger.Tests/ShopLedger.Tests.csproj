@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Plain net10.0 test project. It compiles the app's logic files directly (no MAUI workload needed),
+       using the small stubs in MauiStubs.cs for Preferences / FileSystem / FlowDirection. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>ShopLedger.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\ShopLedger\Models\*.cs" LinkBase="App\Models" />
+    <Compile Include="..\ShopLedger\Data\AppDatabase.cs" LinkBase="App\Data" />
+    <Compile Include="..\ShopLedger\Data\Repositories.cs" LinkBase="App\Data" />
+    <Compile Include="..\ShopLedger\Services\Loc.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\LedgerCalculator.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\LedgerModels.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\LedgerService.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\FuzzyMatcher.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\VoiceCommandParser.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\DateRangeHelper.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\SettingsService.cs" LinkBase="App\Services" />
+    <Compile Include="..\ShopLedger\Services\DemoDataService.cs" LinkBase="App\Services" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.StatementPage" Title="{loc:Translate X_statement}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="{loc:Translate X_pdf_share}" Command="{Binding ExportPdfCommand}" />
+    <ToolbarItem Text="{loc:Translate X_read}" Clicked="OnSpeakClicked" />
+    <ToolbarItem Text="{loc:Translate X_stop}" Clicked="OnStopClicked" />
+  </ContentPage.ToolbarItems>
+
+  <Grid RowDefinitions="Auto,*,Auto" MaximumWidthRequest="980">
+        <VerticalStackLayout Spacing="12" Padding="16,16,16,8">
+          <Border Style="{StaticResource Card}">
+            <VerticalStackLayout Spacing="12">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Border Style="{StaticResource Avatar}">
+                  <Label Text="{Binding Statement.Customer.Name, Converter={StaticResource Initials}}" TextColor="White" FontSize="15" FontAttributes="Bold"
+                         HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Border>
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                  <Label Text="{loc:Translate X_statement}" Style="{StaticResource Overline}" />
+                  <Label Text="{Binding Statement.Customer.Name}" Style="{StaticResource H2}" LineBreakMode="TailTruncation" />
+                </VerticalStackLayout>
+              </Grid>
+              <c:AdaptiveGrid MinColumnWidth="200" MaxColumns="3" ColumnSpacing="10" RowSpacing="10">
+                <Border Style="{StaticResource Field}">
+                  <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                    <Label Text="{x:Static c:Icons.Calendar}" Style="{StaticResource Icon}" FontSize="16" />
+                    <Picker Grid.Column="1" Title="{loc:Translate X_period}" ItemsSource="{Binding Ranges}" SelectedItem="{Binding SelectedRange}" />
+                  </Grid>
+                </Border>
+                <Border Style="{StaticResource Field}" IsVisible="{Binding IsCustom}">
+                  <DatePicker Date="{Binding CustomFrom}" />
+                </Border>
+                <Border Style="{StaticResource Field}" IsVisible="{Binding IsCustom}">
+                  <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                    <Label Text="{loc:Translate X_to}" Style="{StaticResource Caption}" VerticalTextAlignment="Center" />
+                    <DatePicker Grid.Column="1" Date="{Binding CustomTo}" />
+                  </Grid>
+                </Border>
+              </c:AdaptiveGrid>
+              <Border Style="{StaticResource InfoBanner}">
+                <Label Text="{Binding Statement.OpeningBalance, Converter={StaticResource Fmt}, ConverterParameter=T_opening_balance_rs}" FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource RoyalDark}, Dark={StaticResource RoyalOnDark}}" />
+              </Border>
+            </VerticalStackLayout>
+          </Border>
+        </VerticalStackLayout>
+    <Grid Grid.Row="1" Margin="16,0">
+      <c:EmptyState IsVisible="{Binding Rows.Count, Converter={StaticResource IsZero}}" Compact="True" Icon="{x:Static c:Icons.FileText}" Message="{loc:Translate X_no_entries_in_this_period}" />
+      <CollectionView ItemsSource="{Binding Rows}">
+      <CollectionView.Footer><BoxView HeightRequest="12" Color="Transparent" /></CollectionView.Footer>
+      <CollectionView.ItemTemplate>
+        <DataTemplate>
+          <Border Style="{StaticResource ListCard}" Padding="14,12" Margin="0,0,0,8">
+            <VerticalStackLayout Spacing="8">
+              <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Label Text="{Binding Description}" FontAttributes="Bold" />
+                <Label Grid.Column="1" Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+              </Grid>
+              <BoxView Style="{StaticResource Divider}" />
+              <Grid ColumnDefinitions="*,*,*">
+                <Label Text="{Binding Debit, Converter={StaticResource Fmt}, ConverterParameter=T_debit}" FontSize="13"
+                       TextColor="{AppThemeBinding Light={StaticResource DangerColor}, Dark={StaticResource DangerOnDark}}" />
+                <Label Grid.Column="1" Text="{Binding Credit, Converter={StaticResource Fmt}, ConverterParameter=T_credit}" FontSize="13" HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessOnDark}}" />
+                <Label Grid.Column="2" Text="{Binding Balance, Converter={StaticResource Fmt}, ConverterParameter=T_bal}" FontSize="13" FontAttributes="Bold" HorizontalOptions="End" />
+              </Grid>
+            </VerticalStackLayout>
+          </Border>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+      </CollectionView>
+    </Grid>
+
+    <!-- Totals -->
+    <Border Grid.Row="2" Style="{StaticResource BottomPanel}">
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <VerticalStackLayout Spacing="2">
+          <Label Text="{Binding Statement.TotalDebit, Converter={StaticResource Fmt}, ConverterParameter=T_total_debit_rs}" Style="{StaticResource Secondary}" FontSize="13" />
+          <Label Text="{Binding Statement.TotalCredit, Converter={StaticResource Fmt}, ConverterParameter=T_total_credit_rs}" Style="{StaticResource Secondary}" FontSize="13" />
+          <Label Text="{Binding Statement.ClosingBalance, Converter={StaticResource Fmt}, ConverterParameter=T_closing_balance_rs}" Style="{StaticResource H2}" />
+        </VerticalStackLayout>
+        <Button Grid.Column="1" Text="{loc:Translate X_pdf_share}" Command="{Binding ExportPdfCommand}" VerticalOptions="Center">
+          <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.FileText}" Size="17" Color="White" /></Button.ImageSource>
+        </Button>
+      </Grid>
+    </Border>
+  </Grid>
+</ContentPage>

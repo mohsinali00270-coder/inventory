@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:vm="clr-namespace:ShopLedger.ViewModels"
+             xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.HistoryPage" Title="{loc:Translate X_history}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="{loc:Translate X_read}" Clicked="OnSpeakClicked" />
+    <ToolbarItem Text="{loc:Translate X_stop}" Clicked="OnStopClicked" />
+  </ContentPage.ToolbarItems>
+
+  <Grid RowDefinitions="Auto,*" MaximumWidthRequest="1240" Padding="16,14,16,0" RowSpacing="12">
+    <!-- Filters -->
+    <Border Style="{StaticResource Card}" Padding="14">
+      <VerticalStackLayout Spacing="10">
+        <HorizontalStackLayout Spacing="8">
+          <Label Text="{x:Static c:Icons.Filter}" Style="{StaticResource Icon}" FontSize="16" />
+          <Label Text="{loc:Translate UI_Filters}" Style="{StaticResource H3}" VerticalTextAlignment="Center" />
+        </HorizontalStackLayout>
+        <c:AdaptiveGrid MinColumnWidth="200" MaxColumns="3" ColumnSpacing="10" RowSpacing="10">
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_period}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Picker Title="{loc:Translate X_period}" ItemsSource="{Binding Ranges}" SelectedItem="{Binding SelectedRange}" />
+            </Border>
+          </VerticalStackLayout>
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_customer}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Picker Title="{loc:Translate X_customer}" ItemsSource="{Binding CustomerNames}" SelectedItem="{Binding SelectedCustomer}" />
+            </Border>
+          </VerticalStackLayout>
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_type}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Picker Title="{loc:Translate X_type}" ItemsSource="{Binding TypeNames}" SelectedItem="{Binding SelectedType}" />
+            </Border>
+          </VerticalStackLayout>
+        </c:AdaptiveGrid>
+        <c:AdaptiveGrid IsVisible="{Binding IsCustom}" MinColumnWidth="200" MaxColumns="2" ColumnSpacing="10">
+          <Border Style="{StaticResource Field}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+              <Label Text="{x:Static c:Icons.Calendar}" Style="{StaticResource Icon}" FontSize="16" />
+              <DatePicker Grid.Column="1" Date="{Binding CustomFrom}" />
+            </Grid>
+          </Border>
+          <Border Style="{StaticResource Field}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+              <Label Text="{loc:Translate X_to}" Style="{StaticResource Caption}" VerticalTextAlignment="Center" />
+              <DatePicker Grid.Column="1" Date="{Binding CustomTo}" />
+            </Grid>
+          </Border>
+        </c:AdaptiveGrid>
+        <Border Style="{StaticResource InfoBanner}" IsVisible="{Binding Summary, Converter={StaticResource HasText}}">
+          <Label Text="{Binding Summary}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource RoyalDark}, Dark={StaticResource RoyalOnDark}}" />
+        </Border>
+      </VerticalStackLayout>
+    </Border>
+
+    <Grid Grid.Row="1" RowDefinitions="Auto,*">
+      <c:StateBanner IsBusy="{Binding IsBusy}" Error="{Binding Error}" RetryCommand="{Binding LoadCommand}" Margin="0,0,0,8" />
+      <CollectionView Grid.Row="1" ItemsSource="{Binding Rows}">
+        <CollectionView.EmptyView>
+          <c:EmptyState Icon="{x:Static c:Icons.History}" Title="{loc:Translate UI_NoActivity}" Message="{loc:Translate X_no_transactions_found}" />
+        </CollectionView.EmptyView>
+        <CollectionView.Footer><BoxView HeightRequest="16" Color="Transparent" /></CollectionView.Footer>
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Border Style="{StaticResource ListCard}" Padding="12" Margin="0,0,0,8">
+              <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HistoryViewModel}}, Path=ShowDetailsCommand}"
+                                      CommandParameter="{Binding .}" />
+              </Border.GestureRecognizers>
+              <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+                <Border Style="{StaticResource IconChip}">
+                  <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding IsMoneyIn}" Value="True">
+                      <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#CCFBF1, Dark=#0D3A36}" />
+                    </DataTrigger>
+                  </Border.Triggers>
+                  <Label Text="{x:Static c:Icons.Receipt}" Style="{StaticResource Icon}" FontSize="19"
+                         TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}">
+                    <Label.Triggers>
+                      <DataTrigger TargetType="Label" Binding="{Binding IsMoneyIn}" Value="True">
+                        <Setter Property="Text" Value="{x:Static c:Icons.ArrowIn}" />
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TealDark}, Dark={StaticResource TealOnDark}}" />
+                      </DataTrigger>
+                    </Label.Triggers>
+                  </Label>
+                </Border>
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                  <Label Text="{Binding Title}" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+                  <Label Text="{Binding Subtitle}" Style="{StaticResource Caption}" LineBreakMode="TailTruncation" />
+                </VerticalStackLayout>
+                <Label Grid.Column="2" Text="{Binding Amount, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" Style="{StaticResource Money}" VerticalOptions="Center">
+                  <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsMoneyIn}" Value="True">
+                      <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessOnDark}}" />
+                    </DataTrigger>
+                  </Label.Triggers>
+                </Label>
+                <Label Grid.Column="3" Text="{x:Static c:Icons.ChevronRight}" Style="{StaticResource Icon}" FontSize="16" />
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </Grid>
+  </Grid>
+</ContentPage>

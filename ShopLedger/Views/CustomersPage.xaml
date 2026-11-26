@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:vm="clr-namespace:ShopLedger.ViewModels"
+             xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.CustomersPage" Title="{loc:Translate X_customers}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="{loc:Translate X_read}" Clicked="OnSpeakClicked" />
+    <ToolbarItem Text="{loc:Translate X_stop}" Clicked="OnStopClicked" />
+  </ContentPage.ToolbarItems>
+
+  <Grid MaximumWidthRequest="1240">
+    <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="16,14,16,0" RowSpacing="12">
+
+      <!-- Receivable hero -->
+      <Border Style="{StaticResource Hero}" Padding="20,16">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+          <VerticalStackLayout Spacing="2">
+            <Label Text="{loc:Translate X_total_receivable}" Style="{StaticResource OnHeroOverline}" />
+            <Label Text="{Binding TotalReceivable, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" Style="{StaticResource OnHeroValue}" FontSize="28" />
+            <Label Text="{Binding Customers.Count, Converter={StaticResource Fmt}, ConverterParameter=UI_CustomersCount}" Style="{StaticResource OnHeroText}" />
+          </VerticalStackLayout>
+          <Border Grid.Column="1" WidthRequest="52" HeightRequest="52" StrokeThickness="0" StrokeShape="RoundRectangle 16" BackgroundColor="#26FFFFFF" VerticalOptions="Center">
+            <Label Text="{x:Static c:Icons.HandCoins}" FontFamily="Icons" FontSize="26" TextColor="#FCD34D" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+          </Border>
+        </Grid>
+      </Border>
+
+      <!-- Search -->
+      <Border Grid.Row="1" Style="{StaticResource SearchField}">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+          <Label Text="{x:Static c:Icons.Search}" Style="{StaticResource Icon}" FontSize="18" />
+          <Entry Grid.Column="1" Text="{Binding SearchText}" Placeholder="{loc:Translate X_search_name_or_phone}"
+                 ClearButtonVisibility="WhileEditing" ReturnType="Search" SemanticProperties.Description="{loc:Translate X_search_name_or_phone}" />
+        </Grid>
+      </Border>
+
+      <c:StateBanner Grid.Row="2" IsBusy="{Binding IsBusy}" Error="{Binding Error}" RetryCommand="{Binding LoadCommand}" />
+
+      <CollectionView Grid.Row="3" ItemsSource="{Binding Customers}" c:Responsive.MinItemWidth="340" c:Responsive.MaxSpan="3">
+        <CollectionView.ItemsLayout>
+          <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="12" VerticalItemSpacing="0" />
+        </CollectionView.ItemsLayout>
+        <CollectionView.EmptyView>
+          <c:EmptyState Icon="{x:Static c:Icons.Users}" Title="{loc:Translate UI_NoCustomers}"
+                        Message="{loc:Translate X_no_customers_yet_tap_to_add_one}" />
+        </CollectionView.EmptyView>
+        <CollectionView.Footer><BoxView HeightRequest="90" Color="Transparent" /></CollectionView.Footer>
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Border Style="{StaticResource ListCard}" Margin="0,0,0,12">
+              <Border.GestureRecognizers>
+                <TapGestureRecognizer
+                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomersViewModel}}, Path=OpenCommand}"
+                  CommandParameter="{Binding .}" />
+              </Border.GestureRecognizers>
+              <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                <Border Style="{StaticResource Avatar}">
+                  <Label Text="{Binding Name, Converter={StaticResource Initials}}" TextColor="White" FontSize="15" FontAttributes="Bold"
+                         HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                </Border>
+                <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                  <Label Text="{Binding Name}" Style="{StaticResource H3}" LineBreakMode="TailTruncation" />
+                  <HorizontalStackLayout Spacing="6" IsVisible="{Binding Phone, Converter={StaticResource HasText}}">
+                    <Label Text="{x:Static c:Icons.Phone}" Style="{StaticResource Icon}" FontSize="12" />
+                    <Label Text="{Binding Phone}" Style="{StaticResource Caption}" VerticalTextAlignment="Center" />
+                  </HorizontalStackLayout>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" Spacing="4" VerticalOptions="Center">
+                  <Label Text="{Binding CurrentBalance, Converter={StaticResource Fmt}, ConverterParameter=T_rs}" Style="{StaticResource Money}" HorizontalOptions="End">
+                    <Label.Triggers>
+                      <DataTrigger TargetType="Label" Binding="{Binding HasDue}" Value="True">
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DangerColor}, Dark={StaticResource DangerOnDark}}" />
+                      </DataTrigger>
+                    </Label.Triggers>
+                  </Label>
+                  <c:StatusBadge HorizontalOptions="End" Tone="Danger" Icon="{x:Static c:Icons.Alert}" Text="{loc:Translate X_over_limit}" IsVisible="{Binding IsOverLimit}" />
+                  <c:StatusBadge HorizontalOptions="End" Tone="Warning" Text="{loc:Translate UI_Due}" IsVisible="{Binding IsDueWithinLimit}" />
+                  <c:StatusBadge HorizontalOptions="End" Tone="Success" Text="{loc:Translate UI_Settled}" IsVisible="{Binding IsSettled}" />
+                  <c:StatusBadge HorizontalOptions="End" Tone="Info" Text="{loc:Translate UI_Advance}" IsVisible="{Binding HasAdvance}" />
+                </VerticalStackLayout>
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </Grid>
+
+    <Button Text="{x:Static c:Icons.UserPlus}" Style="{StaticResource Fab}" Command="{Binding AddCommand}"
+            SemanticProperties.Description="{loc:Translate Title_NewCustomer}" ToolTipProperties.Text="{loc:Translate Title_NewCustomer}" />
+  </Grid>
+</ContentPage>

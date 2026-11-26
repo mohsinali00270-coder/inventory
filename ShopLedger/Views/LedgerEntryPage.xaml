@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.LedgerEntryPage" Title="{Binding Title}">
+  <ScrollView>
+    <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="16" MaximumWidthRequest="680">
+
+      <Border Style="{StaticResource InfoBanner}" Padding="12">
+        <VerticalStackLayout Spacing="6">
+          <Button Text="{Binding MicText}" Command="{Binding VoiceCommand}" Style="{StaticResource OutlineButton}" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource SurfaceDark}}">
+            <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Mic}" Size="18" Color="{StaticResource Royal}" /></Button.ImageSource>
+          </Button>
+          <Label Text="{Binding VoiceStatus}" Style="{StaticResource Caption}" HorizontalTextAlignment="Center" IsVisible="{Binding VoiceStatus, Converter={StaticResource HasText}}" />
+        </VerticalStackLayout>
+      </Border>
+
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_customer}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}">
+              <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="{x:Static c:Icons.Users}" Style="{StaticResource Icon}" FontSize="16" />
+                <Picker Grid.Column="1" ItemsSource="{Binding Customers}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCustomer}" Title="{loc:Translate X_select_customer}" />
+              </Grid>
+            </Border>
+          </VerticalStackLayout>
+
+          <Border Style="{StaticResource InfoBanner}" IsVisible="{Binding SelectedCustomer, Converter={StaticResource NotNull}}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+              <Label Text="{x:Static c:Icons.Wallet}" Style="{StaticResource Icon}" FontSize="18" TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+              <Label Grid.Column="1" Text="{Binding SelectedCustomer.CurrentBalance, Converter={StaticResource Fmt}, ConverterParameter=T_current_balance_rs}" FontAttributes="Bold" VerticalTextAlignment="Center" />
+            </Grid>
+          </Border>
+
+          <Border Style="{StaticResource Field}" IsVisible="{Binding IsAdjust}">
+            <Picker ItemsSource="{Binding Directions}" SelectedItem="{Binding SelectedDirection}" />
+          </Border>
+
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_amount}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}" MinimumHeightRequest="60">
+              <Entry Text="{Binding Amount}" Keyboard="Numeric" FontSize="24" FontAttributes="Bold" />
+            </Border>
+          </VerticalStackLayout>
+
+          <VerticalStackLayout>
+            <Label Text="{loc:Translate X_note_optional}" Style="{StaticResource FieldLabel}" />
+            <Border Style="{StaticResource Field}"><Entry Text="{Binding Note}" /></Border>
+          </VerticalStackLayout>
+        </VerticalStackLayout>
+      </Border>
+
+      <Button Text="{loc:Translate X_save}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}">
+        <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Check}" Size="18" Color="White" /></Button.ImageSource>
+      </Button>
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

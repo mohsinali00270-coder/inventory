@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.SettingsPage" Title="{loc:Translate X_settings}">
+  <ScrollView>
+    <VerticalStackLayout Padding="{StaticResource PagePadding}" Spacing="16" MaximumWidthRequest="780">
+
+      <!-- Language -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Border Style="{StaticResource IconChip}">
+              <Label Text="{x:Static c:Icons.Languages}" Style="{StaticResource Icon}" TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+              <Label Text="{loc:Translate Language}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+              <Label Text="{loc:Translate Lang_Hint}" Style="{StaticResource Caption}" />
+            </VerticalStackLayout>
+          </Grid>
+          <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Text="English" Command="{Binding SetEnglishCommand}" Style="{StaticResource GhostButton}">
+              <Button.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding IsEnglish}" Value="True">
+                  <Setter Property="BackgroundColor" Value="{StaticResource Royal}" />
+                  <Setter Property="TextColor" Value="White" />
+                </DataTrigger>
+              </Button.Triggers>
+            </Button>
+            <Button Grid.Column="1" Text="اردو" Command="{Binding SetUrduCommand}" Style="{StaticResource GhostButton}">
+              <Button.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding IsUrdu}" Value="True">
+                  <Setter Property="BackgroundColor" Value="{StaticResource Royal}" />
+                  <Setter Property="TextColor" Value="White" />
+                </DataTrigger>
+              </Button.Triggers>
+            </Button>
+          </Grid>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Appearance -->
+      <Border Style="{StaticResource Card}">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" RowDefinitions="Auto,Auto" RowSpacing="12">
+          <Border Style="{StaticResource IconChip}" BackgroundColor="{AppThemeBinding Light=#CCFBF1, Dark=#0D3A36}">
+            <Label Text="{x:Static c:Icons.Theme}" Style="{StaticResource Icon}" TextColor="{AppThemeBinding Light={StaticResource TealDark}, Dark={StaticResource TealOnDark}}" />
+          </Border>
+          <Label Grid.Column="1" Text="{loc:Translate X_appearance}" Style="{StaticResource H3}" VerticalOptions="Center" SemanticProperties.HeadingLevel="Level2" />
+          <Border Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource Field}">
+            <Picker ItemsSource="{Binding ThemeOptions}" SelectedIndex="{Binding ThemeIndex}" Title="{loc:Translate X_appearance}" />
+          </Border>
+        </Grid>
+      </Border>
+
+      <!-- Backup -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Border Style="{StaticResource IconChip}">
+              <Label Text="{x:Static c:Icons.Backup}" Style="{StaticResource Icon}" TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+              <Label Text="{loc:Translate X_backup_and_restore}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+              <Label Text="{loc:Translate X_save_a_copy_of_all_your_data_to_google}" Style="{StaticResource Caption}" />
+            </VerticalStackLayout>
+          </Grid>
+          <c:AdaptiveGrid MinColumnWidth="200" MaxColumns="2" ColumnSpacing="10" RowSpacing="10">
+            <Button Text="{loc:Translate X_backup_now}" Command="{Binding BackupCommand}">
+              <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Upload}" Size="17" Color="White" /></Button.ImageSource>
+            </Button>
+            <Button Text="{loc:Translate X_restore_from_file}" Command="{Binding RestoreCommand}" Style="{StaticResource OutlineButton}">
+              <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Download}" Size="17" Color="{StaticResource Royal}" /></Button.ImageSource>
+            </Button>
+          </c:AdaptiveGrid>
+        </VerticalStackLayout>
+      </Border>
+
+      <!-- Demo + reset -->
+      <Border Style="{StaticResource Card}">
+        <VerticalStackLayout Spacing="12">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Border Style="{StaticResource IconChip}" BackgroundColor="{AppThemeBinding Light=#FEE2E2, Dark=#401518}">
+              <Label Text="{x:Static c:Icons.Alert}" Style="{StaticResource Icon}" TextColor="{AppThemeBinding Light={StaticResource DangerColor}, Dark={StaticResource DangerOnDark}}" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+              <Label Text="{loc:Translate X_demo_and_reset}" Style="{StaticResource H3}" SemanticProperties.HeadingLevel="Level2" />
+              <Label Text="{loc:Translate UI_DangerZone}" Style="{StaticResource Caption}" />
+            </VerticalStackLayout>
+          </Grid>
+          <c:AdaptiveGrid MinColumnWidth="200" MaxColumns="2" ColumnSpacing="10" RowSpacing="10">
+            <Button Text="{loc:Translate X_load_demo}" Command="{Binding LoadDemoCommand}" Style="{StaticResource GhostButton}">
+              <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Sparkles}" Size="17" Color="{AppThemeBinding Light={StaticResource InkSecondaryLight}, Dark={StaticResource InkSecondaryDark}}" /></Button.ImageSource>
+            </Button>
+            <Button Text="{loc:Translate X_clear_all}" Command="{Binding ClearAllCommand}" Style="{StaticResource DangerOutlineButton}">
+              <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Trash}" Size="17" Color="{StaticResource DangerColor}" /></Button.ImageSource>
+            </Button>
+          </c:AdaptiveGrid>
+          <Border Style="{StaticResource SuccessBanner}" IsVisible="{Binding Status, Converter={StaticResource HasText}}">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+              <Label Text="{x:Static c:Icons.CheckCircle}" Style="{StaticResource Icon}" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource TealDark}, Dark={StaticResource TealOnDark}}" />
+              <Label Grid.Column="1" Text="{Binding Status}" FontSize="13" VerticalTextAlignment="Center" />
+            </Grid>
+          </Border>
+        </VerticalStackLayout>
+      </Border>
+
+      <Label Text="{Binding AppVersion, Converter={StaticResource Fmt}, ConverterParameter=UI_Version}" Style="{StaticResource Caption}" HorizontalOptions="Center" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

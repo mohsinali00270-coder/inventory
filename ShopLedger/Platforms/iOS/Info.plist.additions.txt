@@ -1,0 +1,6 @@
+Add these keys inside <dict> of Platforms/iOS/Info.plist (needed for voice input on iPhone):
+
+<key>NSMicrophoneUsageDescription</key>
+<string>ShopLedger uses the microphone so you can add entries by voice.</string>
+<key>NSSpeechRecognitionUsageDescription</key>
+<string>ShopLedger uses speech recognition to turn your voice into entries.</string>

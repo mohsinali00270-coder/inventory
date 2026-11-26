@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:ShopLedger.Services" xmlns:c="clr-namespace:ShopLedger.Controls"
+             x:Class="ShopLedger.Views.StockAdjustPage" Title="{loc:Translate X_stock}">
+  <Grid RowDefinitions="Auto,*" MaximumWidthRequest="780" Padding="16,0">
+      <VerticalStackLayout Spacing="14" Padding="0,16,0,8">
+        <!-- Product + current stock -->
+        <Border Style="{StaticResource Hero}" Padding="20,16">
+          <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <VerticalStackLayout Spacing="2">
+              <Label Text="{loc:Translate X_in_stock}" Style="{StaticResource OnHeroOverline}" />
+              <Label Style="{StaticResource OnHeroValue}" FontSize="28">
+                <Label.FormattedText><FormattedString>
+                  <Span Text="{Binding CurrentStock, StringFormat='{0:0.##}'}" /><Span Text=" " /><Span Text="{Binding Unit}" FontSize="16" />
+                </FormattedString></Label.FormattedText>
+              </Label>
+              <Label Text="{Binding ProductName}" TextColor="White" FontSize="16" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+            </VerticalStackLayout>
+            <Border Grid.Column="1" WidthRequest="52" HeightRequest="52" StrokeThickness="0" StrokeShape="RoundRectangle 16" BackgroundColor="#26FFFFFF" VerticalOptions="Center">
+              <Label Text="{x:Static c:Icons.Boxes}" FontFamily="Icons" FontSize="26" TextColor="#5EEAD4" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+            </Border>
+          </Grid>
+        </Border>
+
+        <!-- Adjustment form -->
+        <Border Style="{StaticResource Card}">
+          <VerticalStackLayout Spacing="12">
+            <Border Style="{StaticResource Field}">
+              <Picker ItemsSource="{Binding Reasons}" SelectedItem="{Binding SelectedReason}" />
+            </Border>
+            <c:AdaptiveGrid MinColumnWidth="200" MaxColumns="2">
+              <VerticalStackLayout>
+                <Label Text="{loc:Translate X_quantity}" Style="{StaticResource FieldLabel}" />
+                <Border Style="{StaticResource Field}"><Entry Text="{Binding Quantity}" Keyboard="Numeric" Placeholder="{loc:Translate X_quantity}" /></Border>
+              </VerticalStackLayout>
+              <VerticalStackLayout>
+                <Label Text="{loc:Translate X_note_optional}" Style="{StaticResource FieldLabel}" />
+                <Border Style="{StaticResource Field}"><Entry Text="{Binding Note}" Placeholder="{loc:Translate X_note_optional}" /></Border>
+              </VerticalStackLayout>
+            </c:AdaptiveGrid>
+            <Button Text="{loc:Translate X_save_adjustment}" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButton}">
+              <Button.ImageSource><FontImageSource FontFamily="Icons" Glyph="{x:Static c:Icons.Check}" Size="18" Color="White" /></Button.ImageSource>
+            </Button>
+          </VerticalStackLayout>
+        </Border>
+
+        <Label Text="{loc:Translate X_history}" Style="{StaticResource H2}" Margin="0,4,0,0" SemanticProperties.HeadingLevel="Level2" />
+      </VerticalStackLayout>
+    <Grid Grid.Row="1">
+      <c:EmptyState IsVisible="{Binding Movements.Count, Converter={StaticResource IsZero}}" Compact="True" Icon="{x:Static c:Icons.History}" Message="{loc:Translate X_no_stock_changes_yet}" />
+      <CollectionView ItemsSource="{Binding Movements}">
+    <CollectionView.Footer><BoxView HeightRequest="16" Color="Transparent" /></CollectionView.Footer>
+    <CollectionView.ItemTemplate>
+      <DataTemplate>
+        <Border Style="{StaticResource ListCard}" Padding="12" Margin="0,0,0,8">
+          <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <Border Style="{StaticResource IconChip}" WidthRequest="36" HeightRequest="36">
+              <Label Text="{x:Static c:Icons.Layers}" Style="{StaticResource Icon}" FontSize="16" TextColor="{AppThemeBinding Light={StaticResource Royal}, Dark={StaticResource RoyalOnDark}}" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+              <Label Text="{Binding ReasonText}" FontAttributes="Bold" />
+              <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy HH:mm}'}" Style="{StaticResource Caption}" />
+            </VerticalStackLayout>
+            <Label Grid.Column="2" Text="{Binding Quantity, StringFormat='{0:+0.##;-0.##}'}" Style="{StaticResource Money}" VerticalOptions="Center" />
+          </Grid>
+        </Border>
+      </DataTemplate>
+    </CollectionView.ItemTemplate>
+      </CollectionView>
+    </Grid>
+  </Grid>
+</ContentPage>
